@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://2a4rjhfkwpcf"]
+
+[ext_resource type="Script" uid="uid://tyb7pf47yvi6" path="res://opening scene/opening_screen.gd" id="1_e48jc"]
+[ext_resource type="Texture2D" uid="uid://chxwd5cx4neqe" path="res://opening scene/blank game title opening screen.PNG" id="2_sxhu7"]
+[ext_resource type="FontFile" uid="uid://bgeh7kdamamam" path="res://opening scene/pictures, fonts etc/kindergarten_4 FONT/kindergarten.ttf" id="3_1jav3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hb5i5"]
+
+[node name="opening screen" type="Node2D"]
+script = ExtResource("1_e48jc")
+
+[node name="opening screen bg" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_sxhu7")
+
+[node name="play button" type="Button" parent="."]
+offset_left = 278.0
+offset_top = 287.0
+offset_right = 493.0
+offset_bottom = 352.0
+theme_override_fonts/font = ExtResource("3_1jav3")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hb5i5")
+text = "play"
+
+[node name="settings button" type="Button" parent="."]
+offset_left = 282.0
+offset_top = 366.0
+offset_right = 497.0
+offset_bottom = 431.0
+theme_override_fonts/font = ExtResource("3_1jav3")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hb5i5")
+text = "settings"
+
+[connection signal="pressed" from="play button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="settings button" to="." method="_on_settings_button_pressed"]

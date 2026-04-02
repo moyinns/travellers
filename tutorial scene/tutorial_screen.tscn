@@ -1,0 +1,116 @@
+[gd_scene load_steps=8 format=3 uid="uid://8u5cl02pvwo7"]
+
+[ext_resource type="Script" uid="uid://bvm6e3mencayj" path="res://tutorial scene/tutorial_screen.gd" id="1_un01u"]
+[ext_resource type="Texture2D" uid="uid://c7n5nei8ytrwe" path="res://tutorial scene/photos/horizontal scroll.PNG" id="2_k7y0s"]
+[ext_resource type="FontFile" uid="uid://cyammoir0onob" path="res://opening scene/pictures, fonts etc/A Goblin Appears!.otf" id="3_olw6s"]
+[ext_resource type="Texture2D" uid="uid://tshhxkcrc0mq" path="res://tutorial scene/photos/long text scroll.PNG" id="4_k7y0s"]
+[ext_resource type="Texture2D" uid="uid://cthl7dt7fuo6y" path="res://tutorial scene/photos/text scroll.PNG" id="5_h3054"]
+[ext_resource type="AudioStream" uid="uid://cfmbiwsph47sj" path="res://opening scene/pictures, fonts etc/typing sfx.ogg" id="6_h3054"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k7y0s"]
+bg_color = Color(0.9372549, 0.7607843, 0.49019608, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.54509807, 0.3137255, 0.13333334, 1)
+
+[node name="tutorial screen" type="Node2D"]
+script = ExtResource("1_un01u")
+
+[node name="dark bg" type="ColorRect" parent="."]
+offset_right = 1149.0
+offset_bottom = 649.0
+color = Color(0.015686275, 0.07058824, 0.08627451, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+visible = false
+offset_left = 353.0
+offset_top = 214.0
+offset_right = 739.0
+offset_bottom = 321.0
+
+[node name="horizontal scroll" type="TextureRect" parent="."]
+offset_left = 373.0
+offset_top = 197.0
+offset_right = 767.3813
+offset_bottom = 417.0
+texture = ExtResource("2_k7y0s")
+expand_mode = 1
+
+[node name="yes button" type="Button" parent="."]
+offset_left = 430.0
+offset_top = 401.0
+offset_right = 545.0
+offset_bottom = 429.0
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("3_olw6s")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_k7y0s")
+text = "yes"
+
+[node name="no button" type="Button" parent="."]
+offset_left = 603.0
+offset_top = 401.0
+offset_right = 718.0
+offset_bottom = 429.0
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("3_olw6s")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_k7y0s")
+text = "no"
+
+[node name="skip tutorial" type="Label" parent="."]
+offset_left = 430.0
+offset_top = 263.0
+offset_right = 721.0
+offset_bottom = 368.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("3_olw6s")
+theme_override_font_sizes/font_size = 24
+text = "do you want to skip the tutorial?"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="long text scroll" type="TextureRect" parent="."]
+offset_left = 1.0
+offset_top = 43.0
+offset_right = 1094.5117
+offset_bottom = 653.0
+texture = ExtResource("4_k7y0s")
+expand_mode = 1
+
+[node name="text scroll" type="TextureRect" parent="."]
+offset_left = 332.0
+offset_top = 175.0
+offset_right = 808.44446
+offset_bottom = 443.0
+texture = ExtResource("5_h3054")
+expand_mode = 1
+
+[node name="text scroll label" type="RichTextLabel" parent="."]
+offset_left = 394.0
+offset_top = 280.0
+offset_right = 771.0
+offset_bottom = 347.0
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/line_separation = 9
+theme_override_constants/outline_size = 6
+theme_override_fonts/normal_font = ExtResource("3_olw6s")
+theme_override_font_sizes/normal_font_size = 24
+text = "yeah, wise choice"
+horizontal_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="typing sound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(373, 197)
+stream = ExtResource("6_h3054")
+parameters/looping = true
+
+[connection signal="pressed" from="yes button" to="." method="_on_yes_button_pressed"]
+[connection signal="pressed" from="no button" to="." method="_on_no_button_pressed"]

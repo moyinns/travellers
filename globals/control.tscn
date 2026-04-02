@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://ci7qs7rmthohm"]
+
+[ext_resource type="Script" uid="uid://c7cbwphokg47x" path="res://globals/control.gd" id="1_bmbir"]
+[ext_resource type="AudioStream" uid="uid://dqbq7qtwso8kr" path="res://opening scene/pictures, fonts etc/new click.ogg" id="2_k30xs"]
+[ext_resource type="AudioStream" uid="uid://sbhl1o3qlq" path="res://opening scene/pictures, fonts etc/new item sound.wav" id="3_k30xs"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bmbir")
+
+[node name="button" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_k30xs")
+
+[node name="bg music" type="AudioStreamPlayer2D" parent="."]
+
+[node name="typing" type="AudioStreamPlayer2D" parent="."]
+
+[node name="flash" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_k30xs")

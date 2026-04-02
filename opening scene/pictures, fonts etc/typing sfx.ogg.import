@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cfmbiwsph47sj"
+path="res://.godot/imported/typing sfx.ogg-80d183b9c751a110f82a11d3403acf07.oggvorbisstr"
+
+[deps]
+
+source_file="res://opening scene/pictures, fonts etc/typing sfx.ogg"
+dest_files=["res://.godot/imported/typing sfx.ogg-80d183b9c751a110f82a11d3403acf07.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

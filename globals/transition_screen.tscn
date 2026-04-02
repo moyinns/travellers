@@ -1,0 +1,81 @@
+[gd_scene load_steps=6 format=3 uid="uid://bg17c8ym2o8m2"]
+
+[ext_resource type="Script" uid="uid://b7vn8u4vsl26g" path="res://globals/transition_screen.gd" id="1_of1yr"]
+
+[sub_resource type="Animation" id="Animation_of1yr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("colour rect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_pwpt6"]
+resource_name = "fade_to_black"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("colour rect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.49907583),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_4ov8d"]
+resource_name = "fade_to_normal"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("colour rect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ptes7"]
+_data = {
+&"RESET": SubResource("Animation_of1yr"),
+&"fade_to_black": SubResource("Animation_pwpt6"),
+&"fade_to_normal": SubResource("Animation_4ov8d")
+}
+
+[node name="transition_screen" type="CanvasLayer"]
+script = ExtResource("1_of1yr")
+
+[node name="colour rect" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.015686275, 0.07058824, 0.08627451, 1)
+
+[node name="animation player" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ptes7")
+}
+
+[node name="flash_rect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
