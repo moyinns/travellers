@@ -10,6 +10,10 @@ extends Node2D
 @onready var scarecrow_pfp: TextureRect = $"scarecrow pfp"
 @onready var long_text_scroll_label: RichTextLabel = $"long text scroll label"
 @onready var click_to_continue: Button = $click_to_continue
+@onready var input_town_line_edit: LineEdit = $"input town line edit"
+@onready var input_name_line_edit: LineEdit = $"input name line edit"
+
+
 
 var visible_characters = 0
 var story_line_part = 0
@@ -25,6 +29,8 @@ func _ready() -> void:
 	scarecrow_pfp.visible = false
 	long_text_scroll_label.visible = false
 	click_to_continue.visible = false
+	input_town_line_edit.visible = false
+	input_name_line_edit.visible = false
 	
 	await get_tree().create_timer(1).timeout # waits 1 sec b4 the flash
 	Transition_screen.colour_rect.visible = false # ensures the transition isnt till playing
@@ -73,6 +79,11 @@ func fade_in(item, time: float = 1.0):
 	var tween = create_tween()
 	tween.tween_property(item, "modulate:a", 1.0, time)
 	return tween
+	
+func fade_out(item, time: float = 0.5):
+	var tween = create_tween()
+	tween.tween_property(item, "modulate:a", 0.0, time)
+	return tween
 
 func story_line_start():
 	horizontal_scroll.visible = false # makes sure everything else is invis
@@ -94,8 +105,44 @@ func story_line_start():
 
 func _on_click_to_continue_pressed() -> void:
 	story_line_part += 1
+	click_to_continue.visible = false
 	if story_line_part == 1:
-		long_text_scroll_label.text = "you are a young traveller from... where are you from again?"
+		long_text_scroll_label.text = "???: you are a young traveller from... where are you from again?"
 		typewriter(long_text_scroll_label, 1.0)
 		await get_tree().create_timer(0.5).timeout
+		fade_in(input_town_line_edit)
+		await get_tree().create_timer(1).timeout
 		fade_in(click_to_continue)
+	if story_line_part == 2:
+		fade_out(input_town_line_edit)
+		long_text_scroll_label.text = "???: ah, yes, right. the land of "+str(Globals.player_town)+", you helped protect people from many scary things such as ... idk fire breathing dragons?"
+		typewriter(long_text_scroll_label, 1.0)
+		fade_in(click_to_continue)
+	if story_line_part == 3:
+		long_text_scroll_label.text = "???: once you defeated all of these, you were known as the great ... "
+		typewriter(long_text_scroll_label, 1.0)
+		fade_in(input_name_line_edit)
+		fade_in(click_to_continue)
+	if story_line_part == 4:
+		fade_out(input_name_line_edit)
+		long_text_scroll_label.text = "???: yes yes the great "+str(Globals.player_name)+". You were a very strong solider, who saved many lives."
+		typewriter(long_text_scroll_label, 1.0)
+		fade_in(click_to_continue)
+	if story_line_part == 5:
+		long_text_scroll_label.text = ""
+		Sound_effects.play_flash_sound()
+		Transition_screen.flash_transition()
+		await get_tree().create_timer(0.5).timeout
+		long_text_scroll_label.text = "Zorak: sorry, I shouldve introduced myself - I'm Zorak, one of the many beings that watch over earth."
+		typewriter(long_text_scroll_label, 1.0)
+		fade_in(click_to_continue)
+	if story_line_part == 6:
+		long_text_scroll_label.text = "Zorak: enough about me, lets get back to your story."
+		typewriter(long_text_scroll_label, 1.0)
+		fade_in(click_to_continue)
+
+func _on_input_town_text_edit_text_submitted(new_text: String) -> void:
+	Globals.player_town = new_text
+	
+func _on_input_name_line_edit_text_submitted(new_text: String) -> void:
+	Globals.player_name = new_text
