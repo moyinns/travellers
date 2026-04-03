@@ -7,7 +7,7 @@ extends Control
 
 
 func play_button_sound(): # this plays the button sound effect
-	button.play()
+	button.play(0.6)
 	
 func play_typing_sound(): # this plays the typing sound effect
 	typing.play()
