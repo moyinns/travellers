@@ -12,6 +12,8 @@ extends Node2D
 @onready var click_to_continue: Button = $click_to_continue
 @onready var input_town_line_edit: LineEdit = $"input town line edit"
 @onready var input_name_line_edit: LineEdit = $"input name line edit"
+@onready var bedroom_bg: TextureRect = $"bedroom bg"
+@onready var talking_sound: AudioStreamPlayer2D = $"talking sound"
 
 
 
@@ -31,6 +33,7 @@ func _ready() -> void:
 	click_to_continue.visible = false
 	input_town_line_edit.visible = false
 	input_name_line_edit.visible = false
+	bedroom_bg.visible = false
 	
 	await get_tree().create_timer(1).timeout # waits 1 sec b4 the flash
 	Transition_screen.colour_rect.visible = false # ensures the transition isnt till playing
@@ -106,6 +109,7 @@ func story_line_start():
 func _on_click_to_continue_pressed() -> void:
 	story_line_part += 1
 	click_to_continue.visible = false
+	Sound_effects.play_button_sound()
 	if story_line_part == 1:
 		long_text_scroll_label.text = "???: you are a young traveller from... where are you from again?"
 		typewriter(long_text_scroll_label, 1.0)
@@ -113,22 +117,22 @@ func _on_click_to_continue_pressed() -> void:
 		fade_in(input_town_line_edit)
 		await get_tree().create_timer(1).timeout
 		fade_in(click_to_continue)
-	if story_line_part == 2:
+	elif story_line_part == 2:
 		fade_out(input_town_line_edit)
-		long_text_scroll_label.text = "???: ah, yes, right. the land of "+str(Globals.player_town)+", you helped protect people from many scary things such as ... idk fire breathing dragons?"
+		long_text_scroll_label.text = "???: ah, yes, right. the land of "+str(Globals.player_town.to_upper())+", you helped protect people from many scary things such as ... idk fire breathing dragons?"
 		typewriter(long_text_scroll_label, 1.0)
 		fade_in(click_to_continue)
-	if story_line_part == 3:
+	elif story_line_part == 3:
 		long_text_scroll_label.text = "???: once you defeated all of these, you were known as the great ... "
 		typewriter(long_text_scroll_label, 1.0)
 		fade_in(input_name_line_edit)
 		fade_in(click_to_continue)
-	if story_line_part == 4:
+	elif story_line_part == 4:
 		fade_out(input_name_line_edit)
-		long_text_scroll_label.text = "???: yes yes the great "+str(Globals.player_name)+". You were a very strong solider, who saved many lives."
+		long_text_scroll_label.text = "???: yes yes the great "+str(Globals.player_name)+". you were a very strong solider, who saved many lives."
 		typewriter(long_text_scroll_label, 1.0)
 		fade_in(click_to_continue)
-	if story_line_part == 5:
+	elif story_line_part == 5:
 		long_text_scroll_label.text = ""
 		Sound_effects.play_flash_sound()
 		Transition_screen.flash_transition()
@@ -136,8 +140,47 @@ func _on_click_to_continue_pressed() -> void:
 		long_text_scroll_label.text = "Zorak: sorry, I shouldve introduced myself - I'm Zorak, one of the many beings that watch over earth."
 		typewriter(long_text_scroll_label, 1.0)
 		fade_in(click_to_continue)
-	if story_line_part == 6:
+	elif story_line_part == 6:
 		long_text_scroll_label.text = "Zorak: enough about me, lets get back to your story."
+		typewriter(long_text_scroll_label, 1.0)
+		fade_in(click_to_continue)
+	elif story_line_part == 7:
+		long_text_scroll_label.text = "Zorak: so, as any great hero, you travelled around the world for yk a cheeky holiday. until one day..."
+		typewriter(long_text_scroll_label, 1.0)
+		fade_in(click_to_continue)
+	elif story_line_part == 8:
+		fade_out(long_text_scroll, 0.1)
+		fade_out(scarecrow_pfp, 0.1)
+		Transition_screen.transition()
+		await Transition_screen.on_transition_finished
+		fade_in(bedroom_bg)
+		long_text_scroll_label.text = ""
+		await get_tree().create_timer(1).timeout
+		fade_in(long_text_scroll)
+		long_text_scroll_label.text = "*ring ring*"
+		typewriter(long_text_scroll_label, 2.0)
+		await get_tree().create_timer(2.5).timeout
+		long_text_scroll_label.text = Globals.player_name+": ergh... who is calling at such a time?"
+		typewriter(long_text_scroll_label, 1.0)
+		click_to_continue.text = "pick up the phone"
+		fade_in(click_to_continue)
+	elif story_line_part == 9:
+		long_text_scroll_label.text = ""
+		fade_out(long_text_scroll)
+		talking_sound.play()
+		await get_tree().create_timer(6).timeout
+		talking_sound.stop()
+		Sound_effects.play_flash_sound()
+		Transition_screen.flash_transition()
+		await get_tree().create_timer(0.5).timeout
+		fade_in(long_text_scroll)
+		long_text_scroll_label.text = Globals.player_name+": oh god- okay, I'm on my way back right now!"
+		typewriter(long_text_scroll_label, 1.0)
+		click_to_continue.text = "click to continue"
+		fade_in(click_to_continue)
+	elif story_line_part == 10:
+		fade_in(scarecrow_pfp)
+		long_text_scroll_label.text = "Zorak: and just like that, you booked your flight back immediately to see ..."
 		typewriter(long_text_scroll_label, 1.0)
 		fade_in(click_to_continue)
 
