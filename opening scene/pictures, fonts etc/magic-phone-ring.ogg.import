@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bu4pbddq5tsjt"
+path="res://.godot/imported/magic-phone-ring.ogg-585e2fc89f6a685ed5a92a09f00d0a25.oggvorbisstr"
+
+[deps]
+
+source_file="res://opening scene/pictures, fonts etc/magic-phone-ring.ogg"
+dest_files=["res://.godot/imported/magic-phone-ring.ogg-585e2fc89f6a685ed5a92a09f00d0a25.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

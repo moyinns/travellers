@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://8u5cl02pvwo7"]
+[gd_scene load_steps=18 format=3 uid="uid://8u5cl02pvwo7"]
 
 [ext_resource type="Script" uid="uid://bvm6e3mencayj" path="res://tutorial scene/tutorial_screen.gd" id="1_un01u"]
 [ext_resource type="Texture2D" uid="uid://c7n5nei8ytrwe" path="res://tutorial scene/photos/horizontal scroll.PNG" id="2_k7y0s"]
@@ -9,6 +9,9 @@
 [ext_resource type="AudioStream" uid="uid://cfmbiwsph47sj" path="res://opening scene/pictures, fonts etc/typing sfx.ogg" id="6_h3054"]
 [ext_resource type="Texture2D" uid="uid://di4p7dv5mq0ao" path="res://tutorial scene/photos/scarecrow.JPG" id="7_n3e03"]
 [ext_resource type="AudioStream" uid="uid://c7pjwqv187bs8" path="res://opening scene/pictures, fonts etc/animal crossing talk.mp3" id="9_6yb06"]
+[ext_resource type="AudioStream" uid="uid://bleq7tt3ggikx" path="res://opening scene/pictures, fonts etc/vintage phone ring.wav" id="10_6yb06"]
+[ext_resource type="AudioStream" uid="uid://bu4pbddq5tsjt" path="res://opening scene/pictures, fonts etc/magic-phone-ring.ogg" id="11_8iugs"]
+[ext_resource type="Texture2D" uid="uid://byqo6tfpoaguf" path="res://tutorial scene/photos/ruined town.JPG" id="11_gqgjr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k7y0s"]
 bg_color = Color(0.9372549, 0.7607843, 0.49019608, 1)
@@ -17,6 +20,43 @@ border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
 border_color = Color(0.54509807, 0.3137255, 0.13333334, 1)
+
+[sub_resource type="Animation" id="Animation_8iugs"]
+resource_name = "pan left to right"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-2, -129), Vector2(-355, -129)]
+}
+
+[sub_resource type="Animation" id="Animation_w0vay"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2, -129)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_splh3"]
+_data = {
+&"RESET": SubResource("Animation_w0vay"),
+&"pan left to right": SubResource("Animation_8iugs")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n3e03"]
 bg_color = Color(0.9372549, 0.7607843, 0.49019608, 1)
@@ -54,6 +94,13 @@ offset_right = 1200.0
 offset_bottom = 675.0
 texture = ExtResource("3_fh4ql")
 
+[node name="ruined town bg" type="TextureRect" parent="."]
+offset_left = -2.0
+offset_top = -129.0
+offset_right = 1503.7778
+offset_bottom = 718.0
+texture = ExtResource("11_gqgjr")
+
 [node name="yes button" type="Button" parent="."]
 offset_left = 430.0
 offset_top = 401.0
@@ -65,6 +112,12 @@ theme_override_fonts/font = ExtResource("3_olw6s")
 theme_override_font_sizes/font_size = 10
 theme_override_styles/normal = SubResource("StyleBoxFlat_k7y0s")
 text = "yes"
+
+[node name="bg animation player" type="AnimationPlayer" parent="."]
+root_node = NodePath("../ruined town bg")
+libraries = {
+&"": SubResource("AnimationLibrary_splh3")
+}
 
 [node name="no button" type="Button" parent="."]
 offset_left = 603.0
@@ -195,6 +248,12 @@ placeholder_text = " Enter your name and press enter"
 
 [node name="talking sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_6yb06")
+
+[node name="ring sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_6yb06")
+
+[node name="discovery sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_8iugs")
 
 [connection signal="pressed" from="yes button" to="." method="_on_yes_button_pressed"]
 [connection signal="pressed" from="no button" to="." method="_on_no_button_pressed"]

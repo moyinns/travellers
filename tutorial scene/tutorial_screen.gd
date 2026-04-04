@@ -14,6 +14,10 @@ extends Node2D
 @onready var input_name_line_edit: LineEdit = $"input name line edit"
 @onready var bedroom_bg: TextureRect = $"bedroom bg"
 @onready var talking_sound: AudioStreamPlayer2D = $"talking sound"
+@onready var ring_sound: AudioStreamPlayer2D = $"ring sound"
+@onready var ruined_town_bg: TextureRect = $"ruined town bg"
+@onready var bg_animation_player: AnimationPlayer = $"bg animation player"
+@onready var discovery_sound: AudioStreamPlayer2D = $"discovery sound"
 
 
 
@@ -34,6 +38,7 @@ func _ready() -> void:
 	input_town_line_edit.visible = false
 	input_name_line_edit.visible = false
 	bedroom_bg.visible = false
+	ruined_town_bg.visible = false
 	
 	await get_tree().create_timer(1).timeout # waits 1 sec b4 the flash
 	Transition_screen.colour_rect.visible = false # ensures the transition isnt till playing
@@ -103,7 +108,7 @@ func story_line_start():
 	await get_tree().create_timer(1).timeout
 	long_text_scroll_label.text = "???: people tend to rush too much nowadays... anywho, lets get started"
 	typewriter(long_text_scroll_label, 1.0)
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(1.5).timeout
 	fade_in(click_to_continue)
 
 func _on_click_to_continue_pressed() -> void:
@@ -112,7 +117,7 @@ func _on_click_to_continue_pressed() -> void:
 	Sound_effects.play_button_sound()
 	if story_line_part == 1:
 		long_text_scroll_label.text = "???: you are a young traveller from... where are you from again?"
-		typewriter(long_text_scroll_label, 1.0)
+		typewriter(long_text_scroll_label, 2)
 		await get_tree().create_timer(0.5).timeout
 		fade_in(input_town_line_edit)
 		await get_tree().create_timer(1).timeout
@@ -120,46 +125,48 @@ func _on_click_to_continue_pressed() -> void:
 	elif story_line_part == 2:
 		fade_out(input_town_line_edit)
 		long_text_scroll_label.text = "???: ah, yes, right. the land of "+str(Globals.player_town.to_upper())+", you helped protect people from many scary things such as ... idk fire breathing dragons?"
-		typewriter(long_text_scroll_label, 1.0)
+		typewriter(long_text_scroll_label, 1.5)
 		fade_in(click_to_continue)
 	elif story_line_part == 3:
 		long_text_scroll_label.text = "???: once you defeated all of these, you were known as the great ... "
-		typewriter(long_text_scroll_label, 1.0)
+		typewriter(long_text_scroll_label, 1.5)
 		fade_in(input_name_line_edit)
 		fade_in(click_to_continue)
 	elif story_line_part == 4:
 		fade_out(input_name_line_edit)
 		long_text_scroll_label.text = "???: yes yes the great "+str(Globals.player_name)+". you were a very strong solider, who saved many lives."
-		typewriter(long_text_scroll_label, 1.0)
+		typewriter(long_text_scroll_label, 1.5)
 		fade_in(click_to_continue)
 	elif story_line_part == 5:
 		long_text_scroll_label.text = ""
-		Sound_effects.play_flash_sound()
+		discovery_sound.play()
 		Transition_screen.flash_transition()
 		await get_tree().create_timer(0.5).timeout
 		long_text_scroll_label.text = "Zorak: sorry, I shouldve introduced myself - I'm Zorak, one of the many beings that watch over earth."
-		typewriter(long_text_scroll_label, 1.0)
+		typewriter(long_text_scroll_label, 1.5)
 		fade_in(click_to_continue)
 	elif story_line_part == 6:
 		long_text_scroll_label.text = "Zorak: enough about me, lets get back to your story."
-		typewriter(long_text_scroll_label, 1.0)
+		typewriter(long_text_scroll_label, 1.5)
 		fade_in(click_to_continue)
 	elif story_line_part == 7:
 		long_text_scroll_label.text = "Zorak: so, as any great hero, you travelled around the world for yk a cheeky holiday. until one day..."
-		typewriter(long_text_scroll_label, 1.0)
+		typewriter(long_text_scroll_label, 1.5)
 		fade_in(click_to_continue)
 	elif story_line_part == 8:
-		fade_out(long_text_scroll, 0.1)
-		fade_out(scarecrow_pfp, 0.1)
+		fade_out(long_text_scroll, 0.01)
+		fade_out(scarecrow_pfp, 0.01)
 		Transition_screen.transition()
 		await Transition_screen.on_transition_finished
 		fade_in(bedroom_bg)
 		long_text_scroll_label.text = ""
 		await get_tree().create_timer(1).timeout
 		fade_in(long_text_scroll)
+		ring_sound.play()
 		long_text_scroll_label.text = "*ring ring*"
-		typewriter(long_text_scroll_label, 2.0)
-		await get_tree().create_timer(2.5).timeout
+		typewriter(long_text_scroll_label, 3.0)
+		await get_tree().create_timer(4).timeout
+		ring_sound.stop()
 		long_text_scroll_label.text = Globals.player_name+": ergh... who is calling at such a time?"
 		typewriter(long_text_scroll_label, 1.0)
 		click_to_continue.text = "pick up the phone"
@@ -172,7 +179,7 @@ func _on_click_to_continue_pressed() -> void:
 		talking_sound.stop()
 		Sound_effects.play_flash_sound()
 		Transition_screen.flash_transition()
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(1).timeout
 		fade_in(long_text_scroll)
 		long_text_scroll_label.text = Globals.player_name+": oh god- okay, I'm on my way back right now!"
 		typewriter(long_text_scroll_label, 1.0)
@@ -183,6 +190,31 @@ func _on_click_to_continue_pressed() -> void:
 		long_text_scroll_label.text = "Zorak: and just like that, you booked your flight back immediately to see ..."
 		typewriter(long_text_scroll_label, 1.0)
 		fade_in(click_to_continue)
+	elif story_line_part == 11:
+		fade_out(long_text_scroll)
+		fade_out(long_text_scroll_label)
+		fade_out(scarecrow_pfp)
+		Transition_screen.transition()
+		await Transition_screen.on_transition_finished
+		fade_in(ruined_town_bg)
+		bg_animation_player.play("pan left to right")
+		await get_tree().create_timer(3).timeout
+		fade_in(long_text_scroll)
+		fade_in(long_text_scroll_label)
+		fade_in(scarecrow_pfp)
+		long_text_scroll_label.text = "Zorak: your town, COMPLETELY ruined."
+		typewriter(long_text_scroll_label, 1.0)
+		fade_in(click_to_continue)
+	elif story_line_part == 12:
+		ruined_town_bg.visible = false
+		Sound_effects.play_flash_sound()
+		Transition_screen.flash_transition()
+		await get_tree().create_timer(0.5).timeout
+		long_text_scroll_label.text = "Zorak: now its your job to fix this!"
+		typewriter(long_text_scroll_label, 1.0)
+		fade_in(click_to_continue)
+	else:
+		pass
 
 func _on_input_town_text_edit_text_submitted(new_text: String) -> void:
 	Globals.player_town = new_text
