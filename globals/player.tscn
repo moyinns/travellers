@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dgxfri1mo8pyp" path="res://character stuff/Princess/SeparateAnim/Walk.png" id="4_akf46"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_52wyr"]
+radius = 9.0
+height = 18.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fd2pt"]
 atlas = ExtResource("2_yhqgc")
@@ -242,6 +244,7 @@ animations = [{
 script = ExtResource("1_ffhnl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_52wyr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
