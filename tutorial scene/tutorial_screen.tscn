@@ -21,6 +21,21 @@ border_width_right = 4
 border_width_bottom = 4
 border_color = Color(0.54509807, 0.3137255, 0.13333334, 1)
 
+[sub_resource type="Animation" id="Animation_w0vay"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2, -129)]
+}
+
 [sub_resource type="Animation" id="Animation_8iugs"]
 resource_name = "pan left to right"
 length = 4.0
@@ -35,21 +50,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(-2, -129), Vector2(-355, -129)]
-}
-
-[sub_resource type="Animation" id="Animation_w0vay"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-2, -129)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_splh3"]

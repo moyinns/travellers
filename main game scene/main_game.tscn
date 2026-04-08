@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://dyky3fnqfi8qs"]
+[gd_scene load_steps=28 format=4 uid="uid://dyky3fnqfi8qs"]
 
 [ext_resource type="Texture2D" uid="uid://dl83mlyujk61s" path="res://character stuff/Beginning Fields.png" id="1_5wxrm"]
 [ext_resource type="Texture2D" uid="uid://cghy3s0km4ts8" path="res://character stuff/Water and Sand/Tileset_Water.png" id="2_vktay"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bmxrthujindjk" path="res://character stuff/Rock Slopes/Tileset_RockSlope.png" id="9_ixpsg"]
 [ext_resource type="Texture2D" uid="uid://bcubjc5e5x3ok" path="res://character stuff/grass.png" id="11_ixpsg"]
 [ext_resource type="PackedScene" uid="uid://bo5c3vgqsxj4h" path="res://globals/player.tscn" id="12_vn32i"]
+[ext_resource type="PackedScene" uid="uid://dly68pmwxbnm0" path="res://globals/ninja.tscn" id="13_oeu06"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gdu4x"]
 texture = ExtResource("1_5wxrm")
@@ -3049,3 +3050,6 @@ position = Vector2(534, 435)
 
 [node name="Camera2D2" type="Camera2D" parent="player"]
 position = Vector2(1120, 648)
+
+[node name="ninja" parent="." instance=ExtResource("13_oeu06")]
+position = Vector2(382, 339)

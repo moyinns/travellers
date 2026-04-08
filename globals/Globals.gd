@@ -2,4 +2,4 @@ extends Node2D
 
 var player_town = "Vyrn"
 var player_name = "Lilth"
-var player_health = 0
+var player_health = 100
