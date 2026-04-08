@@ -1,5 +1,6 @@
-[gd_scene load_steps=53 format=3 uid="uid://crgfd1c8gbbdk"]
+[gd_scene load_steps=59 format=3 uid="uid://crgfd1c8gbbdk"]
 
+[ext_resource type="Script" uid="uid://qkp6jidmcru8" path="res://fight scene/fight_screen.gd" id="1_1xvee"]
 [ext_resource type="Texture2D" uid="uid://boabnwhuaqt74" path="res://fight scene/photos/grass bg.JPG" id="1_3068n"]
 [ext_resource type="Texture2D" uid="uid://c8cj7cnxuwt3s" path="res://fight scene/photos/omori inpso.JPG" id="2_pn532"]
 [ext_resource type="Texture2D" uid="uid://y3vgtv065gnk" path="res://fight scene/photos/pokemon inpso.JPG" id="3_5xqss"]
@@ -9,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cg6kqrmlediqw" path="res://character stuff/Princess/Faceset.png" id="7_f1fu2"]
 [ext_resource type="Texture2D" uid="uid://kkcsxk64g32g" path="res://character stuff/Princess/SeparateAnim/Idle.png" id="8_j2gih"]
 [ext_resource type="Texture2D" uid="uid://cr0pq8303143s" path="res://character stuff/Princess/SeparateAnim/Jump.png" id="9_ltraw"]
+[ext_resource type="Texture2D" uid="uid://c5fxfx5bu86ui" path="res://character stuff/Princess/SpriteSheet.png" id="9_r2mci"]
 [ext_resource type="Texture2D" uid="uid://dgxfri1mo8pyp" path="res://character stuff/Princess/SeparateAnim/Walk.png" id="10_lrtr8"]
 [ext_resource type="Texture2D" uid="uid://mh32dfoi0wxv" path="res://character stuff/NinjaDark/SeparateAnim/Attack.png" id="11_tpx27"]
 [ext_resource type="Texture2D" uid="uid://b7vv63hlh3flv" path="res://character stuff/NinjaDark/SeparateAnim/Dead.png" id="12_1xvee"]
@@ -16,14 +18,27 @@
 [ext_resource type="Texture2D" uid="uid://bjtbu27lpdpa8" path="res://character stuff/NinjaDark/SeparateAnim/Special1.png" id="14_ggdcy"]
 [ext_resource type="Texture2D" uid="uid://h08ddn0cxkbq" path="res://character stuff/NinjaDark/SeparateAnim/Special2.png" id="15_ciu8c"]
 [ext_resource type="Texture2D" uid="uid://b1cxovhyhlu8" path="res://character stuff/NinjaDark/Faceset.png" id="16_64jd0"]
+[ext_resource type="AudioStream" uid="uid://cfmbiwsph47sj" path="res://opening scene/pictures, fonts etc/typing sfx.ogg" id="18_r2mci"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1fu2"]
 bg_color = Color(0.9372549, 0.7607843, 0.49019608, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 border_color = Color(0.54509807, 0.3137255, 0.13333334, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ggdcy"]
+atlas = ExtResource("9_r2mci")
+region = Rect2(16, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ciu8c"]
+atlas = ExtResource("9_r2mci")
+region = Rect2(32, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_64jd0"]
+atlas = ExtResource("9_r2mci")
+region = Rect2(48, 96, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fd2pt"]
 atlas = ExtResource("8_j2gih")
@@ -123,6 +138,20 @@ region = Rect2(48, 48, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tpx27"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ggdcy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ciu8c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_64jd0")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fd2pt")
@@ -348,6 +377,7 @@ animations = [{
 }]
 
 [node name="fight screen" type="Node2D"]
+script = ExtResource("1_1xvee")
 
 [node name="grass bg" type="TextureRect" parent="."]
 offset_right = 40.0
@@ -369,10 +399,10 @@ offset_bottom = 798.0
 texture = ExtResource("3_5xqss")
 
 [node name="text scroll" type="TextureRect" parent="."]
-offset_left = -1.0
-offset_top = -312.0
-offset_right = 791.8889
-offset_bottom = 134.0
+offset_left = 130.0
+offset_top = -311.0
+offset_right = 922.8889
+offset_bottom = 135.0
 texture = ExtResource("5_rbrio")
 expand_mode = 1
 
@@ -383,6 +413,71 @@ offset_right = 1142.6223
 offset_bottom = 655.0
 texture = ExtResource("6_yll4d")
 expand_mode = 1
+
+[node name="uppercut button" type="Button" parent="."]
+offset_left = 628.0
+offset_top = 452.0
+offset_right = 853.8928
+offset_bottom = 507.0
+tooltip_text = "a powerful, upward punch.
+deals -10 damage to enemy,
+deals -1 skill to player."
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_0y6ce")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
+text = "uppercut"
+
+[node name="bck kick button" type="Button" parent="."]
+offset_left = 866.0
+offset_top = 453.0
+offset_right = 1091.8928
+offset_bottom = 508.0
+tooltip_text = "a common matrial art technique, a kick with the bck of ones foot
+deals -15 damage to enemy,
+deals -2 skill to player."
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/line_spacing = 6
+theme_override_fonts/font = ExtResource("7_0y6ce")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
+text = "backward
+kick
+"
+autowrap_mode = 3
+
+[node name="dash punch button" type="Button" parent="."]
+offset_left = 628.0
+offset_top = 516.0
+offset_right = 853.8928
+offset_bottom = 571.0
+tooltip_text = "a forward dash followed by a punch in the face
+deals -20 damage to enemy,
+deals -4 skill to player."
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_0y6ce")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
+text = "dash punch"
+
+[node name="lgh kick button" type="Button" parent="."]
+offset_left = 866.0
+offset_top = 517.0
+offset_right = 1091.8928
+offset_bottom = 572.0
+tooltip_text = "a low yet fast kick.
+deals -5 damage to enemy,"
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/line_spacing = 6
+theme_override_fonts/font = ExtResource("7_0y6ce")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
+text = "lightening kick"
+autowrap_mode = 3
 
 [node name="attack button" type="Button" parent="."]
 offset_left = 628.0
@@ -433,25 +528,48 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
 text = "stats"
 
+[node name="back button" type="Button" parent="."]
+offset_left = 810.0
+offset_top = 602.0
+offset_right = 916.0
+offset_bottom = 634.0
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/line_spacing = 6
+theme_override_fonts/font = ExtResource("7_0y6ce")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
+text = "back
+"
+autowrap_mode = 3
+
+[node name="icon border" type="ColorRect" parent="."]
+offset_left = 30.0
+offset_top = 23.0
+offset_right = 138.0
+offset_bottom = 131.0
+color = Color(0.9372549, 0.7607843, 0.49019608, 1)
+
 [node name="player icon" type="TextureRect" parent="."]
-offset_left = 690.0
-offset_top = 17.0
-offset_right = 794.0
-offset_bottom = 121.0
+offset_left = 32.0
+offset_top = 25.0
+offset_right = 136.0
+offset_bottom = 129.0
 texture = ExtResource("7_f1fu2")
 
 [node name="player" type="AnimatedSprite2D" parent="."]
 position = Vector2(360.99997, 475.99997)
 scale = Vector2(10, 10)
 sprite_frames = SubResource("SpriteFrames_tpx27")
-animation = &"walk forward"
+animation = &"idle front"
+frame_progress = 0.11212947
 
 [node name="text scroll label" type="RichTextLabel" parent="."]
 clip_contents = false
-offset_left = 37.0
-offset_top = 56.0
-offset_right = 654.0
-offset_bottom = 106.0
+offset_left = 168.0
+offset_top = 57.0
+offset_right = 785.0
+offset_bottom = 107.0
 theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
 theme_override_constants/line_separation = 9
 theme_override_constants/outline_size = 6
@@ -466,16 +584,21 @@ scale = Vector2(10, 10)
 sprite_frames = SubResource("SpriteFrames_p6qxp")
 animation = &"attack spin"
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = 686.0
-offset_top = 14.0
-offset_right = 797.0
-offset_bottom = 124.0
-color = Color(0.9372549, 0.7607843, 0.49019608, 1)
-
 [node name="ninja icon" type="TextureRect" parent="."]
-offset_left = 690.0
-offset_top = 17.0
-offset_right = 794.0
-offset_bottom = 121.0
+offset_left = 32.0
+offset_top = 25.0
+offset_right = 136.0
+offset_bottom = 129.0
 texture = ExtResource("16_64jd0")
+
+[node name="typing sound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(373, 197)
+stream = ExtResource("18_r2mci")
+parameters/looping = true
+
+[connection signal="pressed" from="uppercut button" to="." method="_on_uppercut_button_pressed"]
+[connection signal="pressed" from="bck kick button" to="." method="_on_bck_kick_button_pressed"]
+[connection signal="pressed" from="dash punch button" to="." method="_on_dash_punch_button_pressed"]
+[connection signal="pressed" from="lgh kick button" to="." method="_on_lgh_kick_button_pressed"]
+[connection signal="pressed" from="attack button" to="." method="_on_attack_button_pressed"]
+[connection signal="pressed" from="back button" to="." method="_on_back_button_pressed"]
