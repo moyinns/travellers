@@ -574,7 +574,7 @@ theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.1411764
 theme_override_constants/line_separation = 9
 theme_override_constants/outline_size = 6
 theme_override_fonts/normal_font = ExtResource("7_0y6ce")
-theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/normal_font_size = 20
 text = "what will lilth do?"
 horizontal_alignment = 1
 
