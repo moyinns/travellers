@@ -28,6 +28,19 @@ extends Node2D
 @onready var dash_punch_button: Button = $"dash punch button"
 @onready var lgh_kick_button: Button = $"lgh kick button"
 
+# skill options
+@onready var lgh_stab_button: Button = $"lgh stab button"
+@onready var wh_candy_button: Button = $"wh candy button"
+@onready var mud_cake_button: Button = $"mud cake button"
+@onready var heart_rip_button: Button = $"heart rip button"
+
+# rest options
+@onready var stand_guard_button: Button = $"stand guard button"
+@onready var cherish_button: Button = $"cherish button"
+@onready var yawn_button: Button = $"yawn button"
+@onready var ic_water_button: Button = $"ic water button"
+
+
 var moves_made = 0
 var enemy_health = 40
 var enemy_skill = 100
@@ -137,7 +150,9 @@ func _ready() -> void:
 	back_button.visible = false
 	fade_out(moves_scroll, 0.01)
 	hide_move_options(0.01)
+	hide_skills_options(0.01)
 	hide_attack_options(0.01)
+	hide_rest_options(0.01)
 	if Globals.current_enemy == "ninja":
 		ninja_fight()
 	else:
@@ -145,6 +160,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	pass
+
+# funcs that are called throughout the fight
 
 func show_move_options(time: float = 1.0):
 	fade_in(attack_button, time)
@@ -170,22 +187,70 @@ func show_attack_options(time: float = 0.5):
 	fade_in(dash_punch_button, time)
 	fade_in(lgh_kick_button, time)
 
-func ninja_fight():
+func hide_skills_options(time: float = 0.5):
+	fade_out(lgh_stab_button, time)
+	fade_out(wh_candy_button, time)
+	fade_out(mud_cake_button, time)
+	fade_out(heart_rip_button, time)
+
+func show_skills_options(time: float = 0.5):
+	fade_in(lgh_stab_button, time)
+	fade_in(wh_candy_button, time)
+	fade_in(mud_cake_button, time)
+	fade_in(heart_rip_button, time)
+
+func hide_rest_options(time: float = 0.5):
+	fade_out(stand_guard_button, time)
+	fade_out(cherish_button, time)
+	fade_out(yawn_button, time)
+	fade_out(ic_water_button, time)
+
+func show_rest_options(time: float = 0.5):
+	fade_in(stand_guard_button, time)
+	fade_in(cherish_button, time)
+	fade_in(yawn_button, time)
+	fade_in(ic_water_button, time)
+
+func ninja_fight(): # called from _ready if the enemy is ninja
 	enemy_health = 50
 	fade_in(ninja)
 	fade_in(player)
 	player.play("idle front")
-	while enemy_health > 0:
-		if moves_made%2 == 0:
-			text_scroll.visible = true
-			text_scroll_label.visible = true
-			player_icon.visible = true
-			icon_border.visible = true
-			typewriter(text_scroll_label)
-			fade_in(moves_scroll)
-			show_move_options()
-		else:
-			ninja_attack()
+	player_turn() 
+
+func player_turn():
+	if enemy_health <= 0:
+		return
+	text_scroll.visible = true
+	text_scroll_label.visible = true
+	icon_border.visible = true
+	fade_in(player_icon)
+	lgh_stab_button.visible = false
+	wh_candy_button.visible = false
+	mud_cake_button.visible = false
+	heart_rip_button.visible = false
+	stand_guard_button.visible = false
+	cherish_button.visible = false
+	yawn_button.visible = false
+	ic_water_button.visible = false
+	fade_in(moves_scroll)
+	show_move_options()
+
+func enemy_turn():
+	if enemy_health <= 0:
+		player_victory()
+		return
+	if Globals.player_health <= 0:
+		enemy_victory()
+		return
+	if Globals.current_enemy == "ninja":
+		await ninja_attack()
+	elif Globals.current_enemy == "smth": # replace w other mobs and stuff
+		pass
+	player_turn()
+
+
+# move options buttons
 
 func _on_attack_button_pressed() -> void:
 	#hide_move_options(0.5) # cant use this bcs it covers the other buttons
@@ -198,8 +263,26 @@ func _on_attack_button_pressed() -> void:
 
 func _on_back_button_pressed() -> void:
 	hide_attack_options()
+	hide_skills_options()
 	show_move_options()
 	fade_out(back_button, 0.5)
+
+func _on_skill_button_pressed() -> void:
+	attack_button.visible = false
+	skill_button.visible = false
+	rest_button.visible = false
+	stats_button.visible = false
+	show_skills_options()
+	fade_in(back_button, 0.5)
+	
+func _on_rest_button_pressed() -> void:
+	attack_button.visible = false
+	skill_button.visible = false
+	rest_button.visible = false
+	stats_button.visible = false
+	show_rest_options()
+	fade_in(back_button, 0.5)
+
 
 # attack moves
 
@@ -220,15 +303,12 @@ func _on_uppercut_button_pressed() -> void:
 		await get_tree().create_timer(1).timeout
 		enemy_health -= 10
 		Globals.player_skill -= 1
-		moves_made += 1
+		await enemy_turn()
 	else:
 		text_scroll_label.add_theme_font_size_override("normal_font_size", 16)
 		text_scroll_label.text = "not enough skill to peform this move."
 		player_icon.visible = true
 		typewriter(text_scroll_label)
-	
-	
-	
 
 func _on_bck_kick_button_pressed() -> void:
 	if Globals.player_skill >= 2:
@@ -247,7 +327,7 @@ func _on_bck_kick_button_pressed() -> void:
 		await get_tree().create_timer(1).timeout
 		enemy_health -= 15
 		Globals.player_skill -= 2
-		moves_made += 1
+		await enemy_turn()
 	else:
 		text_scroll_label.add_theme_font_size_override("normal_font_size", 16)
 		text_scroll_label.text = "not enough skill to peform this move."
@@ -271,7 +351,7 @@ func _on_dash_punch_button_pressed() -> void:
 		await get_tree().create_timer(1).timeout
 		enemy_health -= 20
 		Globals.player_skill -= 4
-		moves_made += 1
+		await enemy_turn()
 	else:
 		text_scroll_label.add_theme_font_size_override("normal_font_size", 16)
 		text_scroll_label.text = "not enough skill to peform this move."
@@ -293,4 +373,156 @@ func _on_lgh_kick_button_pressed() -> void:
 	typewriter(text_scroll_label)
 	await get_tree().create_timer(1).timeout
 	enemy_health -= 5
-	moves_made += 1
+	await enemy_turn()
+
+
+
+# skill moves
+
+func _on_lgh_stab_button_pressed() -> void:
+	if Globals.player_skill >= 13:
+		fade_out(moves_scroll, 0.5)
+		hide_move_options(0.5)
+		hide_attack_options(0.5)
+		hide_skills_options(0.5)
+		fade_out(back_button, 0.5)
+		player.play("attack")
+		await get_tree().create_timer(0.5).timeout
+		player.play("idle front")
+		Transition_screen.flash_transition()
+		await get_tree().create_timer(1).timeout
+		text_scroll_label.text = "omori dealt a light stab!"
+		player_icon.visible = true
+		typewriter(text_scroll_label)
+		await get_tree().create_timer(1).timeout
+		enemy_health -= 30
+		Globals.player_skill -= 13
+		await enemy_turn()
+	else:
+		text_scroll_label.add_theme_font_size_override("normal_font_size", 16)
+		text_scroll_label.text = "not enough skill to peform this move."
+		player_icon.visible = true
+		typewriter(text_scroll_label)
+
+func _on_wh_candy_button_pressed() -> void:
+	if Globals.player_skill >= 60:
+		fade_out(moves_scroll, 0.5)
+		hide_move_options(0.5)
+		hide_attack_options(0.5)
+		fade_out(back_button, 0.5)
+		hide_skills_options(0.5)
+		player.play("attack")
+		await get_tree().create_timer(0.5).timeout
+		player.play("idle front")
+		Transition_screen.flash_transition()
+		await get_tree().create_timer(1).timeout
+		text_scroll_label.text = Globals.player_name+" dealt an whirling candy!"
+		player_icon.visible = true
+		typewriter(text_scroll_label)
+		await get_tree().create_timer(1).timeout
+		enemy_health -= 85
+		Globals.player_skill -= 60
+		await enemy_turn()
+	else:
+		text_scroll_label.add_theme_font_size_override("normal_font_size", 16)
+		text_scroll_label.text = "not enough skill to peform this move."
+		player_icon.visible = true
+		typewriter(text_scroll_label)
+
+func _on_mud_cake_button_pressed() -> void:
+	if Globals.player_skill >= 30:
+		fade_out(moves_scroll, 0.5)
+		hide_move_options(0.5)
+		hide_attack_options(0.5)
+		fade_out(back_button, 0.5)
+		hide_skills_options(0.5)
+		player.play("attack")
+		await get_tree().create_timer(0.5).timeout
+		player.play("idle front")
+		Transition_screen.flash_transition()
+		await get_tree().create_timer(1).timeout
+		text_scroll_label.text = Globals.player_name+" dealt an mud cake"
+		player_icon.visible = true
+		typewriter(text_scroll_label)
+		await get_tree().create_timer(1).timeout
+		enemy_health -= 60
+		Globals.player_skill -= 30
+		await enemy_turn()
+	else:
+		text_scroll_label.add_theme_font_size_override("normal_font_size", 16)
+		text_scroll_label.text = "not enough skill to peform this move."
+		player_icon.visible = true
+		typewriter(text_scroll_label)
+
+func _on_heart_rip_button_pressed() -> void:
+	if Globals.player_skill >= 85:
+		fade_out(moves_scroll, 0.5)
+		hide_move_options(0.5)
+		hide_attack_options(0.5)
+		fade_out(back_button, 0.5)
+		hide_skills_options(0.5)
+		player.play("attack")
+		await get_tree().create_timer(0.5).timeout
+		player.play("idle front")
+		Transition_screen.flash_transition(Color.DARK_RED, 0.7)
+		await get_tree().create_timer(1.5).timeout
+		text_scroll_label.text = Globals.player_name+" dealt an heart rip!"
+		player_icon.visible = true
+		typewriter(text_scroll_label)
+		await get_tree().create_timer(1.6).timeout
+		enemy_health -= 120
+		Globals.player_skill -= 85
+		await enemy_turn()
+	else:
+		text_scroll_label.add_theme_font_size_override("normal_font_size", 16)
+		text_scroll_label.text = "not enough skill to peform this move."
+		player_icon.visible = true
+		typewriter(text_scroll_label)
+
+
+# rest moves
+
+# endings
+
+func player_victory():
+	if Globals.current_enemy == "ninja":
+		fade_out(ninja, 2.0)
+		fade_out(ninja_icon, 2.0)
+		player_icon.visible = true
+		Transition_screen.flash_transition()
+		await get_tree().create_timer(1).timeout
+		player.play("jump circle")
+		await get_tree().create_timer(1).timeout
+		player.play("idle front")
+		text_scroll_label.text = Globals.player_name+" won!"
+		typewriter(text_scroll_label)
+
+func enemy_victory():
+	if Globals.current_enemy == "ninja":
+		fade_out(player, 2.0)
+		fade_out(player_icon, 2.0)
+		ninja_icon.visible = true
+		Transition_screen.flash_transition(Color.RED)
+		await get_tree().create_timer(1).timeout
+		ninja.play("jump circle")
+		await get_tree().create_timer(1).timeout
+		ninja.play("idle front")
+		text_scroll_label.text = Globals.player_name+" lost!"
+		typewriter(text_scroll_label)
+
+
+
+func _on_stand_guard_button_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_cherish_button_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_yawn_button_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_ic_water_button_pressed() -> void:
+	pass # Replace with function body.

@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://crgfd1c8gbbdk"]
+[gd_scene load_steps=68 format=3 uid="uid://crgfd1c8gbbdk"]
 
 [ext_resource type="Script" uid="uid://qkp6jidmcru8" path="res://fight scene/fight_screen.gd" id="1_1xvee"]
 [ext_resource type="Texture2D" uid="uid://boabnwhuaqt74" path="res://fight scene/photos/grass bg.JPG" id="1_3068n"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://bjtbu27lpdpa8" path="res://character stuff/NinjaDark/SeparateAnim/Special1.png" id="14_ggdcy"]
 [ext_resource type="Texture2D" uid="uid://h08ddn0cxkbq" path="res://character stuff/NinjaDark/SeparateAnim/Special2.png" id="15_ciu8c"]
 [ext_resource type="Texture2D" uid="uid://b1cxovhyhlu8" path="res://character stuff/NinjaDark/Faceset.png" id="16_64jd0"]
+[ext_resource type="Texture2D" uid="uid://britoe6dce1jo" path="res://character stuff/NinjaDark/SeparateAnim/Jump.png" id="16_ggdcy"]
 [ext_resource type="AudioStream" uid="uid://cfmbiwsph47sj" path="res://opening scene/pictures, fonts etc/typing sfx.ogg" id="18_r2mci"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1fu2"]
@@ -59,6 +60,22 @@ region = Rect2(48, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_exh4u"]
 atlas = ExtResource("9_ltraw")
 region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6qxp"]
+atlas = ExtResource("9_ltraw")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v1u43"]
+atlas = ExtResource("9_ltraw")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jewfb"]
+atlas = ExtResource("9_ltraw")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8mhl"]
+atlas = ExtResource("9_ltraw")
+region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tv8ec"]
 atlas = ExtResource("9_ltraw")
@@ -194,6 +211,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_p6qxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v1u43")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jewfb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d8mhl")
+}],
+"loop": true,
+"name": &"jump circle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_tv8ec")
 }],
 "loop": true,
@@ -313,6 +347,22 @@ region = Rect2(16, 0, 16, 16)
 atlas = ExtResource("13_r2mci")
 region = Rect2(0, 0, 16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_bka8q"]
+atlas = ExtResource("16_ggdcy")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bmf47"]
+atlas = ExtResource("16_ggdcy")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxsoh"]
+atlas = ExtResource("16_ggdcy")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j0ymg"]
+atlas = ExtResource("16_ggdcy")
+region = Rect2(48, 0, 16, 16)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ey7c5"]
 atlas = ExtResource("14_ggdcy")
 region = Rect2(0, 0, 16, 16)
@@ -362,6 +412,23 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bka8q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bmf47")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lxsoh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j0ymg")
+}],
+"loop": true,
+"name": &"jump circle",
 "speed": 5.0
 }, {
 "frames": [{
@@ -479,7 +546,139 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
 text = "lightening kick"
 autowrap_mode = 3
 
+[node name="lgh stab button" type="Button" parent="."]
+offset_left = 628.0
+offset_top = 452.0
+offset_right = 853.8928
+offset_bottom = 507.0
+tooltip_text = "always deals a critical hit.
+deals -30  damage to enemy,
+deals -13 juice- no skill to player."
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_0y6ce")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
+text = "light stab"
+
+[node name="wh candy button" type="Button" parent="."]
+offset_left = 866.0
+offset_top = 453.0
+offset_right = 1091.8928
+offset_bottom = 508.0
+tooltip_text = "a revolver crossbody, mizukis common finishing move
+deals -85 damage to enemy,
+deals -60 skill to player."
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/line_spacing = 6
+theme_override_fonts/font = ExtResource("7_0y6ce")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
+text = "whirling 
+candy"
+autowrap_mode = 3
+
+[node name="mud cake button" type="Button" parent="."]
+offset_left = 628.0
+offset_top = 516.0
+offset_right = 853.8928
+offset_bottom = 571.0
+tooltip_text = "a violent faceplant into the ground (ouch)
+deals -60 damage to enemy,
+deals -30 skill to player."
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_0y6ce")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
+text = "mud cake"
+
+[node name="heart rip button" type="Button" parent="."]
+offset_left = 866.0
+offset_top = 517.0
+offset_right = 1091.8928
+offset_bottom = 572.0
+tooltip_text = "a vicious rip to the opponents heart, pretty much lethal.
+deals -120 damage to enemy,
+deals -85 skill to player."
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/line_spacing = 6
+theme_override_fonts/font = ExtResource("7_0y6ce")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
+text = "heart
+ripper"
+autowrap_mode = 3
+
+[node name="stand guard button" type="Button" parent="."]
+offset_left = 628.0
+offset_top = 452.0
+offset_right = 853.8928
+offset_bottom = 507.0
+tooltip_text = "staying still and defending the next attack
+restores +30 health to the player.
+adds +10 skill to the player."
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_0y6ce")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
+text = "stand guard"
+
+[node name="cherish button" type="Button" parent="."]
+offset_left = 866.0
+offset_top = 453.0
+offset_right = 1091.8928
+offset_bottom = 508.0
+tooltip_text = "heal your wounds and come back stronger.
+restores +50 health to the player."
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/line_spacing = 6
+theme_override_fonts/font = ExtResource("7_0y6ce")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
+text = "cherish
+"
+autowrap_mode = 3
+
+[node name="yawn button" type="Button" parent="."]
+offset_left = 628.0
+offset_top = 516.0
+offset_right = 853.8928
+offset_bottom = 571.0
+tooltip_text = "a quick yawn
+restores +25 health to the player.
+adds +25 skill to the player."
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("7_0y6ce")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
+text = "yawn"
+
+[node name="ic water button" type="Button" parent="."]
+offset_left = 866.0
+offset_top = 517.0
+offset_right = 1091.8928
+offset_bottom = 572.0
+tooltip_text = "splashing some cold water on your face to increase alertness
+restores +15 health to the player.
+adds +30 skill to the player."
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/line_spacing = 6
+theme_override_fonts/font = ExtResource("7_0y6ce")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
+text = "ice cold 
+water"
+autowrap_mode = 3
+
 [node name="attack button" type="Button" parent="."]
+visible = false
 offset_left = 628.0
 offset_top = 452.0
 offset_right = 853.8928
@@ -490,8 +689,10 @@ theme_override_fonts/font = ExtResource("7_0y6ce")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
 text = "attack"
+autowrap_mode = 3
 
 [node name="skill button" type="Button" parent="."]
+visible = false
 offset_left = 866.0
 offset_top = 453.0
 offset_right = 1091.8928
@@ -505,6 +706,7 @@ text = "skill
 "
 
 [node name="rest button" type="Button" parent="."]
+visible = false
 offset_left = 628.0
 offset_top = 516.0
 offset_right = 853.8928
@@ -517,6 +719,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
 text = "rest"
 
 [node name="stats button" type="Button" parent="."]
+visible = false
 offset_left = 866.0
 offset_top = 517.0
 offset_right = 1091.8928
@@ -562,7 +765,7 @@ position = Vector2(360.99997, 475.99997)
 scale = Vector2(10, 10)
 sprite_frames = SubResource("SpriteFrames_tpx27")
 animation = &"idle front"
-frame_progress = 0.11212947
+frame_progress = 0.19334842
 
 [node name="text scroll label" type="RichTextLabel" parent="."]
 clip_contents = false
@@ -582,7 +785,8 @@ horizontal_alignment = 1
 position = Vector2(821.99994, 281.99997)
 scale = Vector2(10, 10)
 sprite_frames = SubResource("SpriteFrames_p6qxp")
-animation = &"attack spin"
+animation = &"idle front"
+frame_progress = 0.39534763
 
 [node name="ninja icon" type="TextureRect" parent="."]
 offset_left = 32.0
@@ -600,5 +804,11 @@ parameters/looping = true
 [connection signal="pressed" from="bck kick button" to="." method="_on_bck_kick_button_pressed"]
 [connection signal="pressed" from="dash punch button" to="." method="_on_dash_punch_button_pressed"]
 [connection signal="pressed" from="lgh kick button" to="." method="_on_lgh_kick_button_pressed"]
+[connection signal="pressed" from="lgh stab button" to="." method="_on_lgh_stab_button_pressed"]
+[connection signal="pressed" from="wh candy button" to="." method="_on_wh_candy_button_pressed"]
+[connection signal="pressed" from="mud cake button" to="." method="_on_mud_cake_button_pressed"]
+[connection signal="pressed" from="heart rip button" to="." method="_on_heart_rip_button_pressed"]
 [connection signal="pressed" from="attack button" to="." method="_on_attack_button_pressed"]
+[connection signal="pressed" from="skill button" to="." method="_on_skill_button_pressed"]
+[connection signal="pressed" from="rest button" to="." method="_on_rest_button_pressed"]
 [connection signal="pressed" from="back button" to="." method="_on_back_button_pressed"]
