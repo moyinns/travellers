@@ -13,7 +13,6 @@ extends Node2D
 @onready var icon_border: ColorRect = $"icon border"
 @onready var ninja_icon: TextureRect = $"ninja icon"
 
-
 # move options
 @onready var moves_scroll: TextureRect = $"moves scroll"
 @onready var attack_button: Button = $"attack button"
@@ -40,6 +39,12 @@ extends Node2D
 @onready var yawn_button: Button = $"yawn button"
 @onready var ic_water_button: Button = $"ic water button"
 
+# stats options
+@onready var health_bar: ProgressBar = $"health bar"
+@onready var skill_bar: ProgressBar = $"skill bar"
+@onready var health_label: RichTextLabel = $"health label"
+@onready var skill_label: RichTextLabel = $"skill label"
+
 
 var moves_made = 0
 var enemy_health = 40
@@ -51,9 +56,9 @@ var ninja_moves = [["flying swallow", 15, 4],
 					["art of the inferno", 25, 15],
 					["windmill slash", 30, 20],
 					["helmet splitter", 40, 30],
-					["shinobi aruki", 0, 30],
-					["double breathing", 0, 45],
-					["distraction", 0, 20]]
+					["shinobi aruki", 0, -30],
+					["double breathing", 0, -45],
+					["distraction", 0, -20]]
 
 func ninja_attack():
 	var attack_made = false
@@ -111,10 +116,11 @@ func ninja_attack():
 	ninja.play("idle front")
 	Transition_screen.flash_transition()
 	await get_tree().create_timer(1).timeout
-	text_scroll_label.text = "ninja dealt a "+str(attack_name)+"!"
 	ninja_icon.visible = true
+	text_scroll_label.text = "ninja dealt a "+str(attack_name)+"!"
 	typewriter(text_scroll_label)
 	await get_tree().create_timer(1).timeout
+	fade_out(ninja_icon)
 
 # copied functiosn from tutorial scene -> shld prolly make these global ://
 func fade_in(item, time: float = 1.0):
@@ -148,6 +154,18 @@ func _ready() -> void:
 	ninja.visible = false
 	player.visible = false
 	back_button.visible = false
+	lgh_stab_button.visible = false
+	wh_candy_button.visible = false
+	mud_cake_button.visible = false
+	heart_rip_button.visible = false
+	stand_guard_button.visible = false
+	cherish_button.visible = false
+	yawn_button.visible = false
+	ic_water_button.visible = false
+	health_bar.visible = false
+	skill_bar.visible = false
+	health_label.visible = false
+	skill_label.visible = false
 	fade_out(moves_scroll, 0.01)
 	hide_move_options(0.01)
 	hide_skills_options(0.01)
@@ -262,6 +280,18 @@ func _on_attack_button_pressed() -> void:
 	fade_in(back_button, 0.5)
 
 func _on_back_button_pressed() -> void:
+	lgh_stab_button.visible = false # adding this bcs for some reason the buttons are visible when you hover over the attack buttons :(
+	wh_candy_button.visible = false
+	mud_cake_button.visible = false
+	heart_rip_button.visible = false
+	stand_guard_button.visible = false
+	cherish_button.visible = false
+	yawn_button.visible = false
+	ic_water_button.visible = false
+	health_bar.visible = false
+	skill_bar.visible = false
+	health_label.visible = false
+	skill_label.visible = false
 	hide_attack_options()
 	hide_skills_options()
 	show_move_options()
@@ -282,6 +312,19 @@ func _on_rest_button_pressed() -> void:
 	stats_button.visible = false
 	show_rest_options()
 	fade_in(back_button, 0.5)
+
+func _on_stats_button_pressed() -> void:
+	attack_button.visible = false
+	skill_button.visible = false
+	rest_button.visible = false
+	stats_button.visible = false
+	fade_in(health_bar, 0.5)
+	fade_in(skill_bar, 0.5)
+	fade_in(back_button, 0.5)
+	fade_in(health_label, 0.5)
+	fade_in(skill_label, 0.5)
+	health_bar.value = Globals.player_health
+	skill_bar.value = Globals.player_skill
 
 
 # attack moves
@@ -374,6 +417,7 @@ func _on_lgh_kick_button_pressed() -> void:
 	await get_tree().create_timer(1).timeout
 	enemy_health -= 5
 	await enemy_turn()
+
 
 
 
@@ -482,6 +526,103 @@ func _on_heart_rip_button_pressed() -> void:
 
 # rest moves
 
+func _on_stand_guard_button_pressed() -> void:
+	fade_out(moves_scroll, 0.5)
+	hide_move_options(0.5)
+	hide_attack_options(0.5)
+	hide_skills_options(0.5)
+	hide_rest_options()
+	fade_out(back_button, 0.5)
+	player.play("rest")
+	await get_tree().create_timer(0.5).timeout
+	player.play("idle front")
+	Transition_screen.flash_transition()
+	await get_tree().create_timer(1).timeout
+	text_scroll_label.text = Globals.player_name+" stood guard!"
+	player_icon.visible = true
+	typewriter(text_scroll_label)
+	await get_tree().create_timer(1).timeout
+	Globals.player_health += 30
+	Globals.player_skill += 10
+	if Globals.player_health > 100:
+		Globals.player_health = 100
+	if Globals.player_skill > 100:
+		Globals.player_skill = 100
+	await enemy_turn()
+
+
+func _on_cherish_button_pressed() -> void:
+	fade_out(moves_scroll, 0.5)
+	hide_move_options(0.5)
+	hide_attack_options(0.5)
+	hide_skills_options(0.5)
+	hide_rest_options()
+	fade_out(back_button, 0.5)
+	player.play("rest")
+	await get_tree().create_timer(0.5).timeout
+	player.play("idle front")
+	Transition_screen.flash_transition(Color.LIGHT_GOLDENROD, 0.7)
+	await get_tree().create_timer(1.5).timeout
+	text_scroll_label.text = Globals.player_name+" cherished life!"
+	player_icon.visible = true
+	typewriter(text_scroll_label)
+	await get_tree().create_timer(1.5).timeout
+	Globals.player_health += 50
+	if Globals.player_health > 100:
+		Globals.player_health = 100
+	await enemy_turn()
+
+
+func _on_yawn_button_pressed() -> void:
+	fade_out(moves_scroll, 0.5)
+	hide_move_options(0.5)
+	hide_attack_options(0.5)
+	hide_skills_options(0.5)
+	hide_rest_options()
+	fade_out(back_button, 0.5)
+	player.play("rest")
+	await get_tree().create_timer(0.5).timeout
+	player.play("idle front")
+	Transition_screen.flash_transition()
+	await get_tree().create_timer(1).timeout
+	text_scroll_label.text = Globals.player_name+" yawned!"
+	player_icon.visible = true
+	typewriter(text_scroll_label)
+	await get_tree().create_timer(1).timeout
+	Globals.player_health += 25
+	Globals.player_skill += 25
+	if Globals.player_health > 100:
+		Globals.player_health = 100
+	if Globals.player_skill > 100:
+		Globals.player_skill = 100
+	await enemy_turn()
+
+
+func _on_ic_water_button_pressed() -> void:
+	fade_out(moves_scroll, 0.5)
+	hide_move_options(0.5)
+	hide_attack_options(0.5)
+	hide_skills_options(0.5)
+	hide_rest_options()
+	fade_out(back_button, 0.5)
+	player.play("rest")
+	await get_tree().create_timer(0.5).timeout
+	player.play("idle front")
+	Transition_screen.flash_transition(Color.CADET_BLUE, 0.7)
+	await get_tree().create_timer(1.5).timeout
+	text_scroll_label.text = Globals.player_name+" threw some water in their face!"
+	player_icon.visible = true
+	typewriter(text_scroll_label)
+	await get_tree().create_timer(1).timeout
+	Globals.player_health += 15
+	Globals.player_skill += 30
+	if Globals.player_health > 100:
+		Globals.player_health = 100
+	if Globals.player_skill > 100:
+		Globals.player_skill = 100
+	await enemy_turn()
+
+
 # endings
 
 func player_victory():
@@ -509,20 +650,3 @@ func enemy_victory():
 		ninja.play("idle front")
 		text_scroll_label.text = Globals.player_name+" lost!"
 		typewriter(text_scroll_label)
-
-
-
-func _on_stand_guard_button_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_cherish_button_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_yawn_button_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_ic_water_button_pressed() -> void:
-	pass # Replace with function body.

@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://crgfd1c8gbbdk"]
+[gd_scene load_steps=70 format=3 uid="uid://crgfd1c8gbbdk"]
 
 [ext_resource type="Script" uid="uid://qkp6jidmcru8" path="res://fight scene/fight_screen.gd" id="1_1xvee"]
 [ext_resource type="Texture2D" uid="uid://boabnwhuaqt74" path="res://fight scene/photos/grass bg.JPG" id="1_3068n"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dgxfri1mo8pyp" path="res://character stuff/Princess/SeparateAnim/Walk.png" id="10_lrtr8"]
 [ext_resource type="Texture2D" uid="uid://mh32dfoi0wxv" path="res://character stuff/NinjaDark/SeparateAnim/Attack.png" id="11_tpx27"]
 [ext_resource type="Texture2D" uid="uid://b7vv63hlh3flv" path="res://character stuff/NinjaDark/SeparateAnim/Dead.png" id="12_1xvee"]
+[ext_resource type="Texture2D" uid="uid://c1cunp8xmpyba" path="res://character stuff/Princess/SeparateAnim/Dead.png" id="12_ciu8c"]
 [ext_resource type="Texture2D" uid="uid://c1hx4vrjotek0" path="res://character stuff/NinjaDark/SeparateAnim/Idle.png" id="13_r2mci"]
 [ext_resource type="Texture2D" uid="uid://bjtbu27lpdpa8" path="res://character stuff/NinjaDark/SeparateAnim/Special1.png" id="14_ggdcy"]
 [ext_resource type="Texture2D" uid="uid://h08ddn0cxkbq" path="res://character stuff/NinjaDark/SeparateAnim/Special2.png" id="15_ciu8c"]
@@ -88,6 +89,10 @@ region = Rect2(32, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_kkrfj"]
 atlas = ExtResource("9_ltraw")
 region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3b2j6"]
+atlas = ExtResource("12_ciu8c")
+region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h0t1i"]
 atlas = ExtResource("10_lrtr8")
@@ -248,6 +253,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"jump right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3b2j6")
+}],
+"loop": true,
+"name": &"rest",
 "speed": 5.0
 }, {
 "frames": [{
@@ -445,6 +458,7 @@ animations = [{
 
 [node name="fight screen" type="Node2D"]
 script = ExtResource("1_1xvee")
+metadata/_edit_vertical_guides_ = [-199.0]
 
 [node name="grass bg" type="TextureRect" parent="."]
 offset_right = 40.0
@@ -678,7 +692,6 @@ water"
 autowrap_mode = 3
 
 [node name="attack button" type="Button" parent="."]
-visible = false
 offset_left = 628.0
 offset_top = 452.0
 offset_right = 853.8928
@@ -692,7 +705,6 @@ text = "attack"
 autowrap_mode = 3
 
 [node name="skill button" type="Button" parent="."]
-visible = false
 offset_left = 866.0
 offset_top = 453.0
 offset_right = 1091.8928
@@ -706,7 +718,6 @@ text = "skill
 "
 
 [node name="rest button" type="Button" parent="."]
-visible = false
 offset_left = 628.0
 offset_top = 516.0
 offset_right = 853.8928
@@ -719,7 +730,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_f1fu2")
 text = "rest"
 
 [node name="stats button" type="Button" parent="."]
-visible = false
 offset_left = 866.0
 offset_top = 517.0
 offset_right = 1091.8928
@@ -764,15 +774,14 @@ texture = ExtResource("7_f1fu2")
 position = Vector2(360.99997, 475.99997)
 scale = Vector2(10, 10)
 sprite_frames = SubResource("SpriteFrames_tpx27")
-animation = &"idle front"
-frame_progress = 0.19334842
+animation = &"rest"
 
 [node name="text scroll label" type="RichTextLabel" parent="."]
 clip_contents = false
-offset_left = 168.0
-offset_top = 57.0
-offset_right = 785.0
-offset_bottom = 107.0
+offset_left = 170.0
+offset_top = 53.0
+offset_right = 787.0
+offset_bottom = 103.0
 theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
 theme_override_constants/line_separation = 9
 theme_override_constants/outline_size = 6
@@ -781,13 +790,6 @@ theme_override_font_sizes/normal_font_size = 20
 text = "what will lilth do?"
 horizontal_alignment = 1
 
-[node name="ninja" type="AnimatedSprite2D" parent="."]
-position = Vector2(821.99994, 281.99997)
-scale = Vector2(10, 10)
-sprite_frames = SubResource("SpriteFrames_p6qxp")
-animation = &"idle front"
-frame_progress = 0.39534763
-
 [node name="ninja icon" type="TextureRect" parent="."]
 offset_left = 32.0
 offset_top = 25.0
@@ -795,10 +797,65 @@ offset_right = 136.0
 offset_bottom = 129.0
 texture = ExtResource("16_64jd0")
 
+[node name="ninja" type="AnimatedSprite2D" parent="."]
+position = Vector2(821.99994, 281.99997)
+scale = Vector2(10, 10)
+sprite_frames = SubResource("SpriteFrames_p6qxp")
+animation = &"idle front"
+frame_progress = 0.5066577
+
 [node name="typing sound" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(373, 197)
 stream = ExtResource("18_r2mci")
 parameters/looping = true
+
+[node name="health bar" type="ProgressBar" parent="."]
+modulate = Color(0.6489358, 0.7227828, 0.42466813, 1)
+offset_left = 801.0
+offset_top = 462.0
+offset_right = 1091.0
+offset_bottom = 499.0
+theme_override_colors/font_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+
+[node name="health label" type="RichTextLabel" parent="."]
+clip_contents = false
+offset_left = 603.0
+offset_top = 470.0
+offset_right = 830.0
+offset_bottom = 520.0
+theme_override_colors/default_color = Color(0.6489358, 0.7227828, 0.42466813, 1)
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/line_separation = 9
+theme_override_constants/outline_size = 6
+theme_override_fonts/normal_font = ExtResource("7_0y6ce")
+theme_override_font_sizes/normal_font_size = 20
+text = "health
+"
+horizontal_alignment = 1
+
+[node name="skill label" type="RichTextLabel" parent="."]
+clip_contents = false
+offset_left = 604.0
+offset_top = 530.0
+offset_right = 831.0
+offset_bottom = 580.0
+theme_override_colors/default_color = Color(0.5647059, 0.7764706, 0.7607843, 1)
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/line_separation = 9
+theme_override_constants/outline_size = 6
+theme_override_fonts/normal_font = ExtResource("7_0y6ce")
+theme_override_font_sizes/normal_font_size = 20
+text = "skill
+"
+horizontal_alignment = 1
+
+[node name="skill bar" type="ProgressBar" parent="."]
+modulate = Color(0.5647059, 0.7764706, 0.7607843, 1)
+offset_left = 801.0
+offset_top = 525.0
+offset_right = 1091.0
+offset_bottom = 562.0
+theme_override_colors/font_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
 
 [connection signal="pressed" from="uppercut button" to="." method="_on_uppercut_button_pressed"]
 [connection signal="pressed" from="bck kick button" to="." method="_on_bck_kick_button_pressed"]
@@ -808,7 +865,12 @@ parameters/looping = true
 [connection signal="pressed" from="wh candy button" to="." method="_on_wh_candy_button_pressed"]
 [connection signal="pressed" from="mud cake button" to="." method="_on_mud_cake_button_pressed"]
 [connection signal="pressed" from="heart rip button" to="." method="_on_heart_rip_button_pressed"]
+[connection signal="pressed" from="stand guard button" to="." method="_on_stand_guard_button_pressed"]
+[connection signal="pressed" from="cherish button" to="." method="_on_cherish_button_pressed"]
+[connection signal="pressed" from="yawn button" to="." method="_on_yawn_button_pressed"]
+[connection signal="pressed" from="ic water button" to="." method="_on_ic_water_button_pressed"]
 [connection signal="pressed" from="attack button" to="." method="_on_attack_button_pressed"]
 [connection signal="pressed" from="skill button" to="." method="_on_skill_button_pressed"]
 [connection signal="pressed" from="rest button" to="." method="_on_rest_button_pressed"]
+[connection signal="pressed" from="stats button" to="." method="_on_stats_button_pressed"]
 [connection signal="pressed" from="back button" to="." method="_on_back_button_pressed"]
