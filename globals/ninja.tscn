@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dly68pmwxbnm0"]
+[gd_scene load_steps=20 format=3 uid="uid://dly68pmwxbnm0"]
 
 [ext_resource type="Script" uid="uid://nxy4y4o2rdd" path="res://globals/ninja.gd" id="1_iyf7t"]
 [ext_resource type="Texture2D" uid="uid://mh32dfoi0wxv" path="res://character stuff/NinjaDark/SeparateAnim/Attack.png" id="1_xgryh"]
@@ -99,11 +99,14 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xgryh"]
-radius = 24.0
+radius = 27.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tc0y4"]
-radius = 6.0
-height = 16.0
+height = 22.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iyf7t"]
+radius = 13.0
+height = 28.0
 
 [node name="ninja" type="CharacterBody2D"]
 script = ExtResource("1_iyf7t")
@@ -122,7 +125,15 @@ position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_xgryh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_tc0y4")
+
+[node name="enemy hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy hitbox"]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_iyf7t")
 
 [connection signal="body_entered" from="detection area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection area" to="." method="_on_detection_area_body_exited"]
+[connection signal="body_entered" from="enemy hitbox" to="." method="_on_enemy_hitbox_body_entered"]

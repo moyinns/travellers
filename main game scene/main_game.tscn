@@ -1,6 +1,7 @@
-[gd_scene load_steps=28 format=4 uid="uid://dyky3fnqfi8qs"]
+[gd_scene load_steps=31 format=4 uid="uid://dyky3fnqfi8qs"]
 
 [ext_resource type="Texture2D" uid="uid://dl83mlyujk61s" path="res://character stuff/Beginning Fields.png" id="1_5wxrm"]
+[ext_resource type="Script" uid="uid://b1ynbyckou2c6" path="res://main game scene/main_game.gd" id="1_gdu4x"]
 [ext_resource type="Texture2D" uid="uid://cghy3s0km4ts8" path="res://character stuff/Water and Sand/Tileset_Water.png" id="2_vktay"]
 [ext_resource type="Texture2D" uid="uid://cgtn2ia0ocpem" path="res://character stuff/Trees and Bushes/Atlas/Trees_Bushes.png" id="3_bhg7b"]
 [ext_resource type="Texture2D" uid="uid://c8tspub32utpc" path="res://character stuff/Tileset_Shadow.png" id="3_n0l16"]
@@ -13,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://bcubjc5e5x3ok" path="res://character stuff/grass.png" id="11_ixpsg"]
 [ext_resource type="PackedScene" uid="uid://bo5c3vgqsxj4h" path="res://globals/player.tscn" id="12_vn32i"]
 [ext_resource type="PackedScene" uid="uid://dly68pmwxbnm0" path="res://globals/ninja.tscn" id="13_oeu06"]
+[ext_resource type="FontFile" uid="uid://cyammoir0onob" path="res://opening scene/pictures, fonts etc/A Goblin Appears!.otf" id="14_at5gk"]
+[ext_resource type="PackedScene" uid="uid://bshd8pqbuk3gl" path="res://globals/beast.tscn" id="15_aahy8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gdu4x"]
 texture = ExtResource("1_5wxrm")
@@ -2972,6 +2975,7 @@ sources/0 = SubResource("TileSetAtlasSource_uu1cc")
 sources/1 = SubResource("TileSetAtlasSource_jjryc")
 
 [node name="main game" type="Node2D"]
+script = ExtResource("1_gdu4x")
 
 [node name="TileMap" type="TileMap" parent="."]
 visible = false
@@ -3051,5 +3055,41 @@ position = Vector2(534, 435)
 [node name="Camera2D2" type="Camera2D" parent="player"]
 position = Vector2(1120, 648)
 
-[node name="ninja" parent="." instance=ExtResource("13_oeu06")]
+[node name="CanvasLayer" type="CanvasLayer" parent="player"]
+
+[node name="mob count label" type="RichTextLabel" parent="player/CanvasLayer"]
+texture_filter = 1
+clip_contents = false
+offset_left = -69.0
+offset_top = 20.0
+offset_right = 426.0
+offset_bottom = 72.0
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/line_separation = 9
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("14_at5gk")
+theme_override_font_sizes/normal_font_size = 30
+text = "mobs left:"
+horizontal_alignment = 1
+
+[node name="ninja" parent="." groups=["ninja"] instance=ExtResource("13_oeu06")]
 position = Vector2(382, 339)
+
+[node name="ninja2" parent="." groups=["ninja"] instance=ExtResource("13_oeu06")]
+position = Vector2(559, 196)
+ninja_id = 1
+
+[node name="ninja3" parent="." groups=["ninja"] instance=ExtResource("13_oeu06")]
+position = Vector2(952, 404)
+ninja_id = 2
+
+[node name="beast" parent="." groups=["beast"] instance=ExtResource("15_aahy8")]
+position = Vector2(813, 253)
+
+[node name="beast2" parent="." groups=["beast"] instance=ExtResource("15_aahy8")]
+position = Vector2(263, 214)
+beast_id = 1
+
+[node name="beast3" parent="." groups=["beast"] instance=ExtResource("15_aahy8")]
+position = Vector2(729, 468)
+beast_id = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bo5c3vgqsxj4h"]
+[gd_scene load_steps=32 format=3 uid="uid://bo5c3vgqsxj4h"]
 
 [ext_resource type="Script" uid="uid://87i4s7hu2bpd" path="res://globals/player.gd" id="1_ffhnl"]
 [ext_resource type="Texture2D" uid="uid://kkcsxk64g32g" path="res://character stuff/Princess/SeparateAnim/Idle.png" id="2_yhqgc"]
@@ -240,7 +240,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="player" type="CharacterBody2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ffhnl"]
+radius = 12.0
+height = 28.0
+
+[node name="player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 5
 collision_mask = 5
 script = ExtResource("1_ffhnl")
@@ -262,3 +266,11 @@ limit_right = 1152
 limit_bottom = 648
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+
+[node name="player hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player hitbox"]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_ffhnl")
+
+[connection signal="body_entered" from="player hitbox" to="." method="_on_player_hitbox_body_entered"]

@@ -25,6 +25,12 @@ Sound_effects="*res://globals/control.tscn"
 
 enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
 
+[global_group]
+
+player=""
+ninja=""
+beast=""
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

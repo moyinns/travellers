@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://crgfd1c8gbbdk"]
+[gd_scene load_steps=86 format=3 uid="uid://crgfd1c8gbbdk"]
 
 [ext_resource type="Script" uid="uid://qkp6jidmcru8" path="res://fight scene/fight_screen.gd" id="1_1xvee"]
 [ext_resource type="Texture2D" uid="uid://boabnwhuaqt74" path="res://fight scene/photos/grass bg.JPG" id="1_3068n"]
@@ -21,6 +21,8 @@
 [ext_resource type="Texture2D" uid="uid://b1cxovhyhlu8" path="res://character stuff/NinjaDark/Faceset.png" id="16_64jd0"]
 [ext_resource type="Texture2D" uid="uid://britoe6dce1jo" path="res://character stuff/NinjaDark/SeparateAnim/Jump.png" id="16_ggdcy"]
 [ext_resource type="AudioStream" uid="uid://cfmbiwsph47sj" path="res://opening scene/pictures, fonts etc/typing sfx.ogg" id="18_r2mci"]
+[ext_resource type="Texture2D" uid="uid://grvvla0p5yws" path="res://character stuff/Beast/Beast.png" id="22_p6qxp"]
+[ext_resource type="Texture2D" uid="uid://djjlnwxrf1j1s" path="res://character stuff/Beast/Faceset.png" id="23_v1u43"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1fu2"]
 bg_color = Color(0.9372549, 0.7607843, 0.49019608, 1)
@@ -456,6 +458,125 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhe3q"]
+atlas = ExtResource("22_p6qxp")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0hlc"]
+atlas = ExtResource("22_p6qxp")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynqop"]
+atlas = ExtResource("22_p6qxp")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efkex"]
+atlas = ExtResource("22_p6qxp")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gyj1v"]
+atlas = ExtResource("22_p6qxp")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e80tk"]
+atlas = ExtResource("22_p6qxp")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yn7ep"]
+atlas = ExtResource("22_p6qxp")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x3umq"]
+atlas = ExtResource("22_p6qxp")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3j0ut"]
+atlas = ExtResource("22_p6qxp")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v3ef4"]
+atlas = ExtResource("22_p6qxp")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ax874"]
+atlas = ExtResource("22_p6qxp")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kh3jj"]
+atlas = ExtResource("22_p6qxp")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_irkdw"]
+atlas = ExtResource("22_p6qxp")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jewfb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uhe3q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i0hlc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ynqop")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efkex")
+}],
+"loop": true,
+"name": &"attack spin",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gyj1v")
+}],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e80tk")
+}],
+"loop": true,
+"name": &"idle back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yn7ep")
+}],
+"loop": true,
+"name": &"idle front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x3umq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3j0ut")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v3ef4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ax874")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kh3jj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_irkdw")
+}],
+"loop": true,
+"name": &"special pose",
+"speed": 5.0
+}]
+
 [node name="fight screen" type="Node2D"]
 script = ExtResource("1_1xvee")
 metadata/_edit_vertical_guides_ = [-199.0]
@@ -856,6 +977,19 @@ offset_top = 525.0
 offset_right = 1091.0
 offset_bottom = 562.0
 theme_override_colors/font_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+
+[node name="beast" type="AnimatedSprite2D" parent="."]
+position = Vector2(824.99994, 290.99997)
+scale = Vector2(10, 10)
+sprite_frames = SubResource("SpriteFrames_jewfb")
+animation = &"idle front"
+
+[node name="beast icon" type="TextureRect" parent="."]
+offset_left = 32.0
+offset_top = 25.0
+offset_right = 136.0
+offset_bottom = 129.0
+texture = ExtResource("23_v1u43")
 
 [connection signal="pressed" from="uppercut button" to="." method="_on_uppercut_button_pressed"]
 [connection signal="pressed" from="bck kick button" to="." method="_on_bck_kick_button_pressed"]

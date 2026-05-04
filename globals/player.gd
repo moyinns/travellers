@@ -66,3 +66,9 @@ func play_anim(movement):
 			anim.play("walk backwards")
 		elif movement == 0:
 			anim.play("idle back")
+
+
+
+#func _on_player_hitbox_body_entered(body: Node2D) -> void:
+	#Globals.current_enemy = body
+	#get_tree().change_scene_to_file("res://fight scene/fight_screen.tscn")

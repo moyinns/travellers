@@ -12,6 +12,9 @@ extends Node2D
 @onready var ninja: AnimatedSprite2D = $ninja
 @onready var icon_border: ColorRect = $"icon border"
 @onready var ninja_icon: TextureRect = $"ninja icon"
+@onready var beast: AnimatedSprite2D = $beast
+@onready var beast_icon: TextureRect = $"beast icon"
+
 
 # move options
 @onready var moves_scroll: TextureRect = $"moves scroll"
@@ -55,10 +58,20 @@ var ninja_moves = [["flying swallow", 15, 4],
 					["jumping double slash", 10, 2],
 					["art of the inferno", 25, 15],
 					["windmill slash", 30, 20],
-					["helmet splitter", 40, 30],
 					["shinobi aruki", 0, -30],
 					["double breathing", 0, -45],
 					["distraction", 0, -20]]
+
+var beast_moves = [["claw swipe", 25, 4],
+					["painful gnaw", 20, 10],
+					["feral bite", 15, 0],
+					["stampede", 35, 25],
+					["death roll", 55, 40],
+					["ravage", 40, 35],
+					["shed skin", -25, -25],
+					["primal roar", 0, -45],
+					["back scratch", 0, -20]]
+
 
 func ninja_attack():
 	var attack_made = false
@@ -122,6 +135,69 @@ func ninja_attack():
 	await get_tree().create_timer(1).timeout
 	fade_out(ninja_icon)
 
+func beast_attack():
+	var attack_made = false
+	var attack_damage = 0
+	var skill_damage = 0
+	var attack_name = ""
+	while not attack_made:
+		var num = randi_range(1, 100)
+		var random_row = randi_range(0,2)
+		if enemy_health >= 100:
+			if num <= 5:
+				attack_damage = beast_moves[random_row+6][1]
+				skill_damage = beast_moves[random_row+6][2]
+				attack_name = beast_moves[random_row+6][0]
+			elif num <= 20:
+				attack_damage = beast_moves[random_row][1]
+				skill_damage = beast_moves[random_row][2]
+				attack_name = beast_moves[random_row][0]
+			else:
+				attack_damage = beast_moves[random_row+3][1]
+				skill_damage = beast_moves[random_row+3][2]
+				attack_name = beast_moves[random_row+3][0]
+		elif enemy_health >= 50:
+			if num <= 33:
+				attack_damage = beast_moves[random_row+3][1]
+				skill_damage = beast_moves[random_row+3][2]
+				attack_name = beast_moves[random_row+3][0]
+			elif num <= 66:
+				attack_damage = beast_moves[random_row+6][1]
+				skill_damage = beast_moves[random_row+6][2]
+				attack_name = beast_moves[random_row+6][0]
+			else:
+				attack_damage = beast_moves[random_row][1]
+				skill_damage = beast_moves[random_row][2]
+				attack_name = beast_moves[random_row][0]
+		else:
+			if num <= 5:
+				attack_damage = beast_moves[random_row+6][1]
+				skill_damage = beast_moves[random_row+6][2]
+				attack_name = beast_moves[random_row+6][0]
+			elif num <= 30:
+				attack_damage = beast_moves[random_row+3][1]
+				skill_damage = beast_moves[random_row+3][2]
+				attack_name = beast_moves[random_row+3][0]
+			else:
+				attack_damage = beast_moves[random_row][1]
+				skill_damage = beast_moves[random_row][2]
+				attack_name = beast_moves[random_row][0]
+		if enemy_skill - skill_damage >= 0:
+			attack_made = true
+	Globals.player_health -= attack_damage
+	enemy_skill -= skill_damage
+	beast.play("attack spin")
+	await get_tree().create_timer(0.5).timeout
+	beast.play("idle front")
+	Transition_screen.flash_transition()
+	await get_tree().create_timer(1).timeout
+	beast_icon.visible = true
+	text_scroll_label.text = "beast dealt a "+str(attack_name)+"!"
+	typewriter(text_scroll_label)
+	await get_tree().create_timer(1).timeout
+	fade_out(beast_icon)
+
+
 # copied functiosn from tutorial scene -> shld prolly make these global ://
 func fade_in(item, time: float = 1.0):
 	item.modulate.a = 0
@@ -149,10 +225,12 @@ func _ready() -> void:
 	player_icon.visible = false
 	icon_border.visible = false
 	ninja_icon.visible = false
+	beast_icon.visible = false
 	text_scroll.visible = false
 	text_scroll_label.visible = false
 	ninja.visible = false
 	player.visible = false
+	beast.visible = false
 	back_button.visible = false
 	lgh_stab_button.visible = false
 	wh_candy_button.visible = false
@@ -173,6 +251,8 @@ func _ready() -> void:
 	hide_rest_options(0.01)
 	if Globals.current_enemy == "ninja":
 		ninja_fight()
+	if Globals.current_enemy == "beast":
+		beast_fight()
 	else:
 		pass
 
@@ -236,6 +316,13 @@ func ninja_fight(): # called from _ready if the enemy is ninja
 	player.play("idle front")
 	player_turn() 
 
+func beast_fight():
+	enemy_health = 150
+	fade_in(beast)
+	fade_in(player)
+	player.play("idle front")
+	player_turn()
+
 func player_turn():
 	if enemy_health <= 0:
 		return
@@ -263,8 +350,10 @@ func enemy_turn():
 		return
 	if Globals.current_enemy == "ninja":
 		await ninja_attack()
-	elif Globals.current_enemy == "smth": # replace w other mobs and stuff
-		pass
+	elif Globals.current_enemy == "beast":
+		await beast_attack()
+	#elif Globals.current_enemy == "smth": # replace w other mobs and stuff
+		#pass
 	player_turn()
 
 
@@ -417,8 +506,6 @@ func _on_lgh_kick_button_pressed() -> void:
 	await get_tree().create_timer(1).timeout
 	enemy_health -= 5
 	await enemy_turn()
-
-
 
 
 # skill moves
@@ -629,14 +716,25 @@ func player_victory():
 	if Globals.current_enemy == "ninja":
 		fade_out(ninja, 2.0)
 		fade_out(ninja_icon, 2.0)
-		player_icon.visible = true
-		Transition_screen.flash_transition()
-		await get_tree().create_timer(1).timeout
-		player.play("jump circle")
-		await get_tree().create_timer(1).timeout
-		player.play("idle front")
-		text_scroll_label.text = Globals.player_name+" won!"
-		typewriter(text_scroll_label)
+	
+	if Globals.current_enemy == "beast":
+		fade_out(beast, 2.0)
+		fade_out(beast_icon, 2.0)
+	
+	player_icon.visible = true
+	Transition_screen.flash_transition()
+	await get_tree().create_timer(1).timeout
+	player.play("jump circle")
+	await get_tree().create_timer(1).timeout
+	player.play("idle front")
+	text_scroll_label.text = Globals.player_name+" won!"
+	Globals.defeated_count += 1
+	typewriter(text_scroll_label)
+	await get_tree().create_timer(2).timeout
+	Transition_screen.transition()
+	await Transition_screen.on_transition_finished
+	get_tree().change_scene_to_file("res://main game scene/main_game.tscn")
+
 
 func enemy_victory():
 	if Globals.current_enemy == "ninja":
@@ -648,5 +746,16 @@ func enemy_victory():
 		ninja.play("jump circle")
 		await get_tree().create_timer(1).timeout
 		ninja.play("idle front")
+		text_scroll_label.text = Globals.player_name+" lost!"
+		typewriter(text_scroll_label)
+	if Globals.current_enemy == "beast":
+		fade_out(player, 2.0)
+		fade_out(player_icon, 2.0)
+		beast_icon.visible = true
+		Transition_screen.flash_transition(Color.RED)
+		await get_tree().create_timer(1).timeout
+		beast.play("special pose")
+		await get_tree().create_timer(1).timeout
+		beast.play("idle front")
 		text_scroll_label.text = Globals.player_name+" lost!"
 		typewriter(text_scroll_label)
