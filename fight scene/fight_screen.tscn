@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=3 uid="uid://crgfd1c8gbbdk"]
+[gd_scene load_steps=102 format=3 uid="uid://crgfd1c8gbbdk"]
 
 [ext_resource type="Script" uid="uid://qkp6jidmcru8" path="res://fight scene/fight_screen.gd" id="1_1xvee"]
 [ext_resource type="Texture2D" uid="uid://boabnwhuaqt74" path="res://fight scene/photos/grass bg.JPG" id="1_3068n"]
@@ -23,6 +23,12 @@
 [ext_resource type="AudioStream" uid="uid://cfmbiwsph47sj" path="res://opening scene/pictures, fonts etc/typing sfx.ogg" id="18_r2mci"]
 [ext_resource type="Texture2D" uid="uid://grvvla0p5yws" path="res://character stuff/Beast/Beast.png" id="22_p6qxp"]
 [ext_resource type="Texture2D" uid="uid://djjlnwxrf1j1s" path="res://character stuff/Beast/Faceset.png" id="23_v1u43"]
+[ext_resource type="Texture2D" uid="uid://bavr0xrqlagl7" path="res://character stuff/Knight/SeparateAnim/Jump.png" id="24_lxsoh"]
+[ext_resource type="Texture2D" uid="uid://dim1mrvfupylr" path="res://character stuff/Knight/SeparateAnim/Dead.png" id="25_j0ymg"]
+[ext_resource type="Texture2D" uid="uid://pwuaq6ogvsy1" path="res://character stuff/Knight/SeparateAnim/Idle.png" id="26_3b2j6"]
+[ext_resource type="Texture2D" uid="uid://cigdn08tmmwxj" path="res://character stuff/Knight/SeparateAnim/Special1.png" id="27_0bcbs"]
+[ext_resource type="Texture2D" uid="uid://chijjvwagqghq" path="res://character stuff/Knight/SeparateAnim/Special2.png" id="28_pwecy"]
+[ext_resource type="Texture2D" uid="uid://dot2qnrqwjhug" path="res://character stuff/Knight/Faceset.png" id="29_8ay3c"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1fu2"]
 bg_color = Color(0.9372549, 0.7607843, 0.49019608, 1)
@@ -577,6 +583,97 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8hmd"]
+atlas = ExtResource("24_lxsoh")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nuiu7"]
+atlas = ExtResource("24_lxsoh")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4rn3"]
+atlas = ExtResource("24_lxsoh")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nohs8"]
+atlas = ExtResource("24_lxsoh")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ardv"]
+atlas = ExtResource("25_j0ymg")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxy5n"]
+atlas = ExtResource("26_3b2j6")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yhmbb"]
+atlas = ExtResource("26_3b2j6")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6jetk"]
+atlas = ExtResource("27_0bcbs")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mq60m"]
+atlas = ExtResource("28_pwecy")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mre2b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j8hmd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nuiu7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4rn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nohs8")
+}],
+"loop": true,
+"name": &"attack spin",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ardv")
+}],
+"loop": true,
+"name": &"dead",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxy5n")
+}],
+"loop": true,
+"name": &"idle back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yhmbb")
+}],
+"loop": true,
+"name": &"idle front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6jetk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mq60m")
+}],
+"loop": true,
+"name": &"special pose",
+"speed": 5.0
+}]
+
 [node name="fight screen" type="Node2D"]
 script = ExtResource("1_1xvee")
 metadata/_edit_vertical_guides_ = [-199.0]
@@ -990,6 +1087,19 @@ offset_top = 25.0
 offset_right = 136.0
 offset_bottom = 129.0
 texture = ExtResource("23_v1u43")
+
+[node name="knight" type="AnimatedSprite2D" parent="."]
+position = Vector2(822, 287)
+scale = Vector2(10, 10)
+sprite_frames = SubResource("SpriteFrames_mre2b")
+animation = &"special pose"
+
+[node name="knight icon" type="TextureRect" parent="."]
+offset_left = 32.0
+offset_top = 25.0
+offset_right = 136.0
+offset_bottom = 129.0
+texture = ExtResource("29_8ay3c")
 
 [connection signal="pressed" from="uppercut button" to="." method="_on_uppercut_button_pressed"]
 [connection signal="pressed" from="bck kick button" to="." method="_on_bck_kick_button_pressed"]
