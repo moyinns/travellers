@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://dyky3fnqfi8qs"]
+[gd_scene load_steps=33 format=4 uid="uid://dyky3fnqfi8qs"]
 
 [ext_resource type="Texture2D" uid="uid://dl83mlyujk61s" path="res://character stuff/Beginning Fields.png" id="1_5wxrm"]
 [ext_resource type="Script" uid="uid://b1ynbyckou2c6" path="res://main game scene/main_game.gd" id="1_gdu4x"]
@@ -17,6 +17,7 @@
 [ext_resource type="FontFile" uid="uid://cyammoir0onob" path="res://opening scene/pictures, fonts etc/A Goblin Appears!.otf" id="14_at5gk"]
 [ext_resource type="PackedScene" uid="uid://bshd8pqbuk3gl" path="res://globals/beast.tscn" id="15_aahy8"]
 [ext_resource type="PackedScene" uid="uid://lbxtamjicu1x" path="res://globals/knight.tscn" id="17_bieww"]
+[ext_resource type="AudioStream" uid="uid://m28giy1omvqx" path="res://main game scene/game music.wav" id="18_ryt0p"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gdu4x"]
 texture = ExtResource("1_5wxrm")
@@ -3096,7 +3097,7 @@ position = Vector2(729, 468)
 beast_id = 1
 
 [node name="knight" parent="." groups=["knight"] instance=ExtResource("17_bieww")]
-position = Vector2(471, 435)
+position = Vector2(406, 199)
 
 [node name="knight2" parent="." groups=["knight"] instance=ExtResource("17_bieww")]
 position = Vector2(242, 324)
@@ -3109,5 +3110,9 @@ knight_id = 2
 [node name="timer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_ryt0p")
+autoplay = true
 
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]

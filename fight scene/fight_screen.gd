@@ -50,6 +50,11 @@ extends Node2D
 @onready var health_label: RichTextLabel = $"health label"
 @onready var skill_label: RichTextLabel = $"skill label"
 
+# sound effects
+@onready var attack_sound: AudioStreamPlayer2D = $"attack sound"
+@onready var rest_sound: AudioStreamPlayer2D = $"rest sound"
+@onready var win_sound: AudioStreamPlayer2D = $"win sound"
+@onready var loose_sound: AudioStreamPlayer2D = $"loose sound"
 
 var moves_made = 0
 var enemy_health = 40
@@ -142,6 +147,7 @@ func ninja_attack():
 	Transition_screen.flash_transition()
 	await get_tree().create_timer(1).timeout
 	ninja_icon.visible = true
+	fade_in(ninja_icon, 0.3)
 	text_scroll_label.text = "ninja dealt a "+str(attack_name)+"!"
 	typewriter(text_scroll_label)
 	await get_tree().create_timer(1).timeout
@@ -204,6 +210,7 @@ func beast_attack():
 	Transition_screen.flash_transition()
 	await get_tree().create_timer(1).timeout
 	beast_icon.visible = true
+	fade_in(beast_icon, 0.3)
 	text_scroll_label.text = "beast dealt a "+str(attack_name)+"!"
 	typewriter(text_scroll_label)
 	await get_tree().create_timer(1).timeout
@@ -266,6 +273,7 @@ func knight_attack():
 	Transition_screen.flash_transition()
 	await get_tree().create_timer(1).timeout
 	knight_icon.visible = true
+	fade_in(knight_icon, 0.3)
 	text_scroll_label.text = "knight dealt a "+str(attack_name)+"!"
 	typewriter(text_scroll_label)
 	await get_tree().create_timer(1).timeout
@@ -409,6 +417,10 @@ func knight_fight():
 
 func player_turn():
 	if enemy_health <= 0:
+		player_victory()
+		return
+	if Globals.player_health <= 0:
+		enemy_victory()
 		return
 	text_scroll.visible = true
 	text_scroll_label.visible = true
@@ -514,7 +526,9 @@ func _on_uppercut_button_pressed() -> void:
 		await get_tree().create_timer(0.5).timeout
 		player.play("idle front")
 		Transition_screen.flash_transition()
+		attack_sound.play()
 		await get_tree().create_timer(1).timeout
+		attack_sound.stop()
 		text_scroll_label.text = Globals.player_name+" dealt an uppercut!"
 		player_icon.visible = true
 		typewriter(text_scroll_label)
@@ -538,7 +552,9 @@ func _on_bck_kick_button_pressed() -> void:
 		await get_tree().create_timer(0.5).timeout
 		player.play("idle front")
 		Transition_screen.flash_transition()
+		attack_sound.play()
 		await get_tree().create_timer(1).timeout
+		attack_sound.stop()
 		text_scroll_label.text = Globals.player_name+" dealt a backwards kick!"
 		player_icon.visible = true
 		typewriter(text_scroll_label)
@@ -562,7 +578,9 @@ func _on_dash_punch_button_pressed() -> void:
 		await get_tree().create_timer(0.5).timeout
 		player.play("idle front")
 		Transition_screen.flash_transition()
+		attack_sound.play()
 		await get_tree().create_timer(1).timeout
+		attack_sound.stop()
 		text_scroll_label.text = Globals.player_name+" dealt a dash punch!"
 		player_icon.visible = true
 		typewriter(text_scroll_label)
@@ -585,7 +603,9 @@ func _on_lgh_kick_button_pressed() -> void:
 	await get_tree().create_timer(0.5).timeout
 	player.play("idle front")
 	Transition_screen.flash_transition()
+	attack_sound.play()
 	await get_tree().create_timer(1).timeout
+	attack_sound.stop()
 	text_scroll_label.text = Globals.player_name+" dealt a light kick!"
 	player_icon.visible = true
 	typewriter(text_scroll_label)
@@ -607,7 +627,9 @@ func _on_lgh_stab_button_pressed() -> void:
 		await get_tree().create_timer(0.5).timeout
 		player.play("idle front")
 		Transition_screen.flash_transition()
+		attack_sound.play()
 		await get_tree().create_timer(1).timeout
+		attack_sound.stop()
 		text_scroll_label.text = "omori dealt a light stab!"
 		player_icon.visible = true
 		typewriter(text_scroll_label)
@@ -632,7 +654,9 @@ func _on_wh_candy_button_pressed() -> void:
 		await get_tree().create_timer(0.5).timeout
 		player.play("idle front")
 		Transition_screen.flash_transition()
+		attack_sound.play()
 		await get_tree().create_timer(1).timeout
+		attack_sound.stop()
 		text_scroll_label.text = Globals.player_name+" dealt an whirling candy!"
 		player_icon.visible = true
 		typewriter(text_scroll_label)
@@ -657,7 +681,9 @@ func _on_mud_cake_button_pressed() -> void:
 		await get_tree().create_timer(0.5).timeout
 		player.play("idle front")
 		Transition_screen.flash_transition()
+		attack_sound.play()
 		await get_tree().create_timer(1).timeout
+		attack_sound.stop()
 		text_scroll_label.text = Globals.player_name+" dealt an mud cake"
 		player_icon.visible = true
 		typewriter(text_scroll_label)
@@ -682,7 +708,9 @@ func _on_heart_rip_button_pressed() -> void:
 		await get_tree().create_timer(0.5).timeout
 		player.play("idle front")
 		Transition_screen.flash_transition(Color.DARK_RED, 0.7)
+		attack_sound.play()
 		await get_tree().create_timer(1.5).timeout
+		attack_sound.stop()
 		text_scroll_label.text = Globals.player_name+" dealt an heart rip!"
 		player_icon.visible = true
 		typewriter(text_scroll_label)
@@ -710,7 +738,9 @@ func _on_stand_guard_button_pressed() -> void:
 	await get_tree().create_timer(0.5).timeout
 	player.play("idle front")
 	Transition_screen.flash_transition()
+	rest_sound.play()
 	await get_tree().create_timer(1).timeout
+	rest_sound.stop()
 	text_scroll_label.text = Globals.player_name+" stood guard!"
 	player_icon.visible = true
 	typewriter(text_scroll_label)
@@ -735,7 +765,9 @@ func _on_cherish_button_pressed() -> void:
 	await get_tree().create_timer(0.5).timeout
 	player.play("idle front")
 	Transition_screen.flash_transition(Color.LIGHT_GOLDENROD, 0.7)
+	rest_sound.play()
 	await get_tree().create_timer(1.5).timeout
+	rest_sound.stop()
 	text_scroll_label.text = Globals.player_name+" cherished life!"
 	player_icon.visible = true
 	typewriter(text_scroll_label)
@@ -757,7 +789,9 @@ func _on_yawn_button_pressed() -> void:
 	await get_tree().create_timer(0.5).timeout
 	player.play("idle front")
 	Transition_screen.flash_transition()
+	rest_sound.play()
 	await get_tree().create_timer(1).timeout
+	rest_sound.stop()
 	text_scroll_label.text = Globals.player_name+" yawned!"
 	player_icon.visible = true
 	typewriter(text_scroll_label)
@@ -782,7 +816,9 @@ func _on_ic_water_button_pressed() -> void:
 	await get_tree().create_timer(0.5).timeout
 	player.play("idle front")
 	Transition_screen.flash_transition(Color.CADET_BLUE, 0.7)
+	rest_sound.play()
 	await get_tree().create_timer(1.5).timeout
+	rest_sound.stop()
 	text_scroll_label.text = Globals.player_name+" threw some water in their face!"
 	player_icon.visible = true
 	typewriter(text_scroll_label)
@@ -807,6 +843,7 @@ func player_victory():
 		fade_out(beast, 2.0)
 		fade_out(beast_icon, 2.0)
 	
+	win_sound.play()
 	player_icon.visible = true
 	Transition_screen.flash_transition()
 	await get_tree().create_timer(1).timeout
@@ -823,10 +860,12 @@ func player_victory():
 
 
 func enemy_victory():
+	loose_sound.play()
 	if Globals.current_enemy == "ninja":
 		fade_out(player, 2.0)
 		fade_out(player_icon, 2.0)
 		ninja_icon.visible = true
+		fade_in(ninja_icon)
 		Transition_screen.flash_transition(Color.RED)
 		await get_tree().create_timer(1).timeout
 		ninja.play("jump circle")
@@ -838,6 +877,7 @@ func enemy_victory():
 		fade_out(player, 2.0)
 		fade_out(player_icon, 2.0)
 		beast_icon.visible = true
+		fade_in(beast_icon)
 		Transition_screen.flash_transition(Color.RED)
 		await get_tree().create_timer(1).timeout
 		beast.play("special pose")
@@ -849,6 +889,7 @@ func enemy_victory():
 		fade_out(player, 2.0)
 		fade_out(player_icon, 2.0)
 		knight_icon.visible = true
+		fade_in(knight_icon)
 		Transition_screen.flash_transition(Color.RED)
 		await get_tree().create_timer(1).timeout
 		knight.play("special pose")

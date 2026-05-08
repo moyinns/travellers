@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cer2vg3s5sl7f"
+path="res://.godot/imported/game music.wav-892419e307743881bd8265eeda676b1b.sample"
+
+[deps]
+
+source_file="res://fight scene/photos/game music.wav"
+dest_files=["res://.godot/imported/game music.wav-892419e307743881bd8265eeda676b1b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

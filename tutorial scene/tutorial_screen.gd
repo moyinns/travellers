@@ -313,7 +313,7 @@ func _on_click_to_continue_pressed() -> void:
 		click_to_continue.visible = false
 		typewriter(main_tutorial_label, 1.5)
 		fade_in(arrow_head) 
-		arrow_head.position = Vector2(869, 521)
+		arrow_head.position = Vector2(738, 633)
 		box_border.position = Vector2(869, 521)
 		fade_in(box_border)
 		await get_tree().create_timer(3).timeout

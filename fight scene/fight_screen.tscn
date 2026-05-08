@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=3 uid="uid://crgfd1c8gbbdk"]
+[gd_scene load_steps=107 format=3 uid="uid://crgfd1c8gbbdk"]
 
 [ext_resource type="Script" uid="uid://qkp6jidmcru8" path="res://fight scene/fight_screen.gd" id="1_1xvee"]
 [ext_resource type="Texture2D" uid="uid://boabnwhuaqt74" path="res://fight scene/photos/grass bg.JPG" id="1_3068n"]
@@ -21,14 +21,19 @@
 [ext_resource type="Texture2D" uid="uid://b1cxovhyhlu8" path="res://character stuff/NinjaDark/Faceset.png" id="16_64jd0"]
 [ext_resource type="Texture2D" uid="uid://britoe6dce1jo" path="res://character stuff/NinjaDark/SeparateAnim/Jump.png" id="16_ggdcy"]
 [ext_resource type="AudioStream" uid="uid://cfmbiwsph47sj" path="res://opening scene/pictures, fonts etc/typing sfx.ogg" id="18_r2mci"]
+[ext_resource type="AudioStream" uid="uid://t6derocu0se" path="res://fight scene/photos/strong punch.mp3" id="22_8ay3c"]
 [ext_resource type="Texture2D" uid="uid://grvvla0p5yws" path="res://character stuff/Beast/Beast.png" id="22_p6qxp"]
+[ext_resource type="AudioStream" uid="uid://bweap2xxf0oat" path="res://fight scene/photos/rest sound.wav" id="23_mre2b"]
 [ext_resource type="Texture2D" uid="uid://djjlnwxrf1j1s" path="res://character stuff/Beast/Faceset.png" id="23_v1u43"]
+[ext_resource type="AudioStream" uid="uid://cs7u8hrb7kx2s" path="res://fight scene/photos/player win sound.wav" id="24_j66na"]
 [ext_resource type="Texture2D" uid="uid://bavr0xrqlagl7" path="res://character stuff/Knight/SeparateAnim/Jump.png" id="24_lxsoh"]
+[ext_resource type="AudioStream" uid="uid://c5wjld3m6a2u1" path="res://fight scene/photos/player fail sound.wav" id="25_0um8w"]
 [ext_resource type="Texture2D" uid="uid://dim1mrvfupylr" path="res://character stuff/Knight/SeparateAnim/Dead.png" id="25_j0ymg"]
 [ext_resource type="Texture2D" uid="uid://pwuaq6ogvsy1" path="res://character stuff/Knight/SeparateAnim/Idle.png" id="26_3b2j6"]
 [ext_resource type="Texture2D" uid="uid://cigdn08tmmwxj" path="res://character stuff/Knight/SeparateAnim/Special1.png" id="27_0bcbs"]
 [ext_resource type="Texture2D" uid="uid://chijjvwagqghq" path="res://character stuff/Knight/SeparateAnim/Special2.png" id="28_pwecy"]
 [ext_resource type="Texture2D" uid="uid://dot2qnrqwjhug" path="res://character stuff/Knight/Faceset.png" id="29_8ay3c"]
+[ext_resource type="AudioStream" uid="uid://cer2vg3s5sl7f" path="res://fight scene/photos/game music.wav" id="34_fieli"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1fu2"]
 bg_color = Color(0.9372549, 0.7607843, 0.49019608, 1)
@@ -1027,6 +1032,24 @@ position = Vector2(373, 197)
 stream = ExtResource("18_r2mci")
 parameters/looping = true
 
+[node name="attack sound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(373, 197)
+stream = ExtResource("22_8ay3c")
+parameters/looping = true
+
+[node name="rest sound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(373, 197)
+stream = ExtResource("23_mre2b")
+
+[node name="win sound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(373, 197)
+stream = ExtResource("24_j66na")
+volume_db = 12.404
+
+[node name="loose sound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(373, 197)
+stream = ExtResource("25_0um8w")
+
 [node name="health bar" type="ProgressBar" parent="."]
 modulate = Color(0.6489358, 0.7227828, 0.42466813, 1)
 offset_left = 801.0
@@ -1100,6 +1123,11 @@ offset_top = 25.0
 offset_right = 136.0
 offset_bottom = 129.0
 texture = ExtResource("29_8ay3c")
+
+[node name="background music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("34_fieli")
+volume_db = -0.1
+autoplay = true
 
 [connection signal="pressed" from="uppercut button" to="." method="_on_uppercut_button_pressed"]
 [connection signal="pressed" from="bck kick button" to="." method="_on_bck_kick_button_pressed"]

@@ -79,11 +79,15 @@ border_color = Color(1, 1, 1, 1)
 [node name="tutorial screen" type="Node2D"]
 script = ExtResource("1_un01u")
 
-[node name="dark bg2" type="ColorRect" parent="."]
-visible = false
+[node name="dark bg3" type="ColorRect" parent="."]
 offset_right = 1149.0
 offset_bottom = 649.0
-color = Color(0.07398971, 0.019322379, 0.0031643668, 1)
+color = Color(0.21568628, 0.20784314, 0.21176471, 0.37254903)
+
+[node name="dark bg2" type="ColorRect" parent="."]
+offset_right = 1149.0
+offset_bottom = 649.0
+color = Color(0.07450981, 0.019607844, 0.003921569, 1)
 
 [node name="dark bg" type="ColorRect" parent="."]
 offset_right = 1149.0
@@ -96,11 +100,6 @@ offset_top = 2.0
 offset_right = 1167.9923
 offset_bottom = 661.0
 texture = ExtResource("13_w0vay")
-
-[node name="dark bg3" type="ColorRect" parent="."]
-offset_right = 1149.0
-offset_bottom = 649.0
-color = Color(0.21568628, 0.20784314, 0.21176471, 0.37254903)
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 visible = false
@@ -330,10 +329,10 @@ flip_v = true
 
 [node name="arrow head3" type="TextureRect" parent="."]
 visible = false
-offset_left = 737.0
-offset_top = 631.0
-offset_right = 886.0
-offset_bottom = 780.0
+offset_left = 738.0
+offset_top = 633.0
+offset_right = 887.0
+offset_bottom = 782.0
 rotation = -1.5707964
 texture = ExtResource("14_splh3")
 expand_mode = 1
