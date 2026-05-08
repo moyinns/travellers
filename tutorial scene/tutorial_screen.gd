@@ -25,12 +25,13 @@ extends Node2D
 @onready var dark_bg_2: ColorRect = $"dark bg2"
 @onready var text_scroll_3: TextureRect = $"text scroll3"
 @onready var main_tutorial_label: Label = $"main tutorial label"
+@onready var box_border: Panel = $"box border"
 
 
 
 
 var visible_characters = 0
-var story_line_part = 11
+var story_line_part = 0
 
 func _ready() -> void:
 	horizontal_scroll.visible = false # all of this js makes the stuff im gonna use for the other scenes invisible at the start
@@ -54,6 +55,8 @@ func _ready() -> void:
 	dark_bg_2.visible = false
 	text_scroll_3.visible = false 
 	main_tutorial_label.visible = false
+	box_border.visible = false
+	
 	
 	await get_tree().create_timer(1).timeout # waits 1 sec b4 the flash
 	Transition_screen.colour_rect.visible = false # ensures the transition isnt till playing
@@ -71,8 +74,7 @@ func _process(delta: float) -> void:
 
 func _on_yes_button_pressed() -> void:
 	Sound_effects.play_button_sound()
-	get_tree().quit()
-
+	get_tree().change_scene_to_file("res://main game scene/main_game.tscn")
 
 func _on_no_button_pressed() -> void:
 	Sound_effects.play_button_sound()
@@ -149,15 +151,17 @@ func _on_click_to_continue_pressed() -> void:
 		fade_in(click_to_continue)
 	elif story_line_part == 4:
 		fade_out(input_name_line_edit)
-		long_text_scroll_label.text = "???: yes yes the great "+str(Globals.player_name)+". you were a very strong solider, who saved many lives."
+		long_text_scroll_label.text = "???: yes yes the great "+str(Globals.player_name).to_upper()+". you were a very strong solider, who saved many lives."
 		typewriter(long_text_scroll_label, 1.5)
 		fade_in(click_to_continue)
 	elif story_line_part == 5:
+		input_name_line_edit.visible = false
+		input_town_line_edit.visible = false
 		long_text_scroll_label.text = ""
 		discovery_sound.play()
 		Transition_screen.flash_transition()
 		await get_tree().create_timer(0.5).timeout
-		long_text_scroll_label.text = "Zorak: sorry, I shouldve introduced myself - I'm Zorak, one of the many beings that watch over earth."
+		long_text_scroll_label.text = "Zorak: sorry, I shouldve introduced myself - I'm ZORAK, one of the many beings that watch over earth."
 		typewriter(long_text_scroll_label, 1.5)
 		fade_in(click_to_continue)
 	elif story_line_part == 6:
@@ -171,12 +175,14 @@ func _on_click_to_continue_pressed() -> void:
 	elif story_line_part == 8:
 		fade_out(long_text_scroll, 0.01)
 		fade_out(scarecrow_pfp, 0.01)
+		fade_out(long_text_scroll_label, 0.01)
 		Transition_screen.transition()
 		await Transition_screen.on_transition_finished
 		fade_in(bedroom_bg)
 		long_text_scroll_label.text = ""
 		await get_tree().create_timer(1).timeout
 		fade_in(long_text_scroll)
+		fade_in(long_text_scroll_label)
 		ring_sound.play()
 		long_text_scroll_label.text = "*ring ring*"
 		typewriter(long_text_scroll_label, 3.0)
@@ -222,6 +228,7 @@ func _on_click_to_continue_pressed() -> void:
 		fade_in(click_to_continue)
 	elif story_line_part == 12:
 		ruined_town_bg.visible = false
+		bedroom_bg.visible= false
 		dark_bg_2.visible = true
 		Sound_effects.play_flash_sound()
 		Transition_screen.flash_transition()
@@ -232,21 +239,98 @@ func _on_click_to_continue_pressed() -> void:
 	elif story_line_part == 13:
 		long_text_scroll_label.text = "Zorak: okay... lets get to the fighting-"
 		typewriter(long_text_scroll_label, 1.5)
-		fade_in(input_name_line_edit)
 		fade_in(click_to_continue)
 	elif story_line_part == 14:
+		input_name_line_edit.visible = false
+		input_town_line_edit.visible = false
 		dark_bg_2.visible = false
+		click_to_continue.visible = false
+		main_tutorial_label.visible = true
 		fade_out(long_text_scroll_label)
 		fade_out(long_text_scroll)
 		Transition_screen.transition()
 		await Transition_screen.on_transition_finished
 		fade_in(fight_scene_png)
-		fade_in(main_tutorial_label)
-		main_tutorial_label.text = "this is what the fighting scene looks like"
+		fade_in(text_scroll_3)
+		main_tutorial_label.text = "Zorak: this is what the fighting scene looks like:"
 		typewriter(main_tutorial_label, 1.0)
 		click_to_continue.position = Vector2(33, 262)
 		fade_in(click_to_continue)
-		
+	elif story_line_part == 15:
+		main_tutorial_label.text = "Zorak: there are 4 options in the main menu."
+		typewriter(main_tutorial_label, 1.5)
+		fade_in(click_to_continue)
+	elif story_line_part == 16:
+		main_tutorial_label.text = "Zorak: each attack or skill move uses up skill, so be careful of that and read the descriptions."
+		typewriter(main_tutorial_label, 1.5)
+		fade_in(click_to_continue)
+	elif story_line_part == 17:
+		main_tutorial_label.text = "Zorak: firstly, attacks."
+		click_to_continue.visible = false
+		typewriter(main_tutorial_label, 1.5)
+		fade_in(arrow_head)
+		fade_in(box_border)
+		await get_tree().create_timer(3).timeout
+		main_tutorial_label.text = "Zorak: these are basic level moves that deal decent damage but dont use up much skill"
+		typewriter(main_tutorial_label, 2)
+		await get_tree().create_timer(5).timeout
+		main_tutorial_label.text = "Zorak: these are great if you want to deal some damage but your health is a lil low"
+		typewriter(main_tutorial_label, 2)
+		fade_in(click_to_continue)
+	elif story_line_part == 18:
+		main_tutorial_label.text = "Zorak: secondly, skills. "
+		click_to_continue.visible = false
+		typewriter(main_tutorial_label, 1.5)
+		fade_in(arrow_head) 
+		arrow_head.position = Vector2(914, 323)
+		box_border.position = Vector2(869, 456)
+		fade_in(box_border)
+		await get_tree().create_timer(3).timeout
+		main_tutorial_label.text = "Zorak: these are the special moves, they deal huge amounts of damage but take up a lot of skill"
+		typewriter(main_tutorial_label, 2)
+		await get_tree().create_timer(5).timeout
+		main_tutorial_label.text = "Zorak: these are ideal for performing a final blow to finish off a mob."
+		typewriter(main_tutorial_label, 2)
+		fade_in(click_to_continue)
+	elif story_line_part == 19:
+		main_tutorial_label.text = "Zorak: thirdly, rest. "
+		click_to_continue.visible = false
+		typewriter(main_tutorial_label, 1.5)
+		fade_in(arrow_head) 
+		arrow_head.rotation_degrees = -90
+		arrow_head.position = Vector2(491, 630)
+		box_border.position = Vector2(628, 521)
+		fade_in(box_border)
+		await get_tree().create_timer(3).timeout
+		main_tutorial_label.text = "Zorak: these are specific moves to regain your health/skill throughout the battle"
+		typewriter(main_tutorial_label, 2)
+		await get_tree().create_timer(5).timeout
+		main_tutorial_label.text = "Zorak: remember, your health + skill naturally increase as you walk through the map."
+		typewriter(main_tutorial_label, 2)
+		fade_in(click_to_continue)
+	elif story_line_part == 20:
+		main_tutorial_label.text = "Zorak: talking about health, fourthly, stats. "
+		click_to_continue.visible = false
+		typewriter(main_tutorial_label, 1.5)
+		fade_in(arrow_head) 
+		arrow_head.position = Vector2(869, 521)
+		box_border.position = Vector2(869, 521)
+		fade_in(box_border)
+		await get_tree().create_timer(3).timeout
+		main_tutorial_label.text = "Zorak: these show your current health and skill level"
+		typewriter(main_tutorial_label, 2)
+		await get_tree().create_timer(5).timeout
+		main_tutorial_label.text = "Zorak: make sure you keep track of these throughout the game to prevent a game over!"
+		typewriter(main_tutorial_label, 2)
+		fade_in(click_to_continue)
+	elif story_line_part == 21:
+		fade_out(arrow_head)
+		fade_out(box_border)
+		main_tutorial_label.text = "Zorak: you're ready to save your town, good luck "+str(Globals.player_name)+" , you'll need it."
+		typewriter(main_tutorial_label, 2)
+		fade_in(click_to_continue)
+	elif story_line_part == 22:
+		get_tree().change_scene_to_file("res://main game scene/main_game.tscn")
 	else:
 		pass
 

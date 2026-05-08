@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://8u5cl02pvwo7"]
+[gd_scene load_steps=21 format=3 uid="uid://8u5cl02pvwo7"]
 
 [ext_resource type="Script" uid="uid://bvm6e3mencayj" path="res://tutorial scene/tutorial_screen.gd" id="1_un01u"]
 [ext_resource type="Texture2D" uid="uid://c7n5nei8ytrwe" path="res://tutorial scene/photos/horizontal scroll.PNG" id="2_k7y0s"]
@@ -68,6 +68,14 @@ border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_splh3"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+
 [node name="tutorial screen" type="Node2D"]
 script = ExtResource("1_un01u")
 
@@ -88,6 +96,11 @@ offset_top = 2.0
 offset_right = 1167.9923
 offset_bottom = 661.0
 texture = ExtResource("13_w0vay")
+
+[node name="dark bg3" type="ColorRect" parent="."]
+offset_right = 1149.0
+offset_bottom = 649.0
+color = Color(0.21568628, 0.20784314, 0.21176471, 0.37254903)
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 visible = false
@@ -163,6 +176,7 @@ horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="long text scroll" type="TextureRect" parent="."]
+visible = false
 offset_left = 1.0
 offset_top = 43.0
 offset_right = 1094.5117
@@ -181,22 +195,21 @@ expand_mode = 1
 [node name="text scroll3" type="TextureRect" parent="."]
 offset_left = 14.0
 offset_top = 409.0
-offset_right = 552.6667
-offset_bottom = 712.0
+offset_right = 590.0
+offset_bottom = 733.0
 texture = ExtResource("5_h3054")
 expand_mode = 1
 
 [node name="main tutorial label" type="Label" parent="."]
-offset_left = 95.0
-offset_top = 521.0
-offset_right = 504.0
-offset_bottom = 599.0
+offset_left = 87.0
+offset_top = 536.0
+offset_right = 533.0
+offset_bottom = 610.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("3_olw6s")
-theme_override_font_sizes/font_size = 24
-text = "do you want to skip the tutorial?"
+theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
 autowrap_mode = 3
 
@@ -262,6 +275,7 @@ text = "click to continue"
 autowrap_mode = 3
 
 [node name="input town line edit" type="LineEdit" parent="."]
+visible = false
 offset_left = 160.0
 offset_top = 436.0
 offset_right = 1117.0
@@ -274,6 +288,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_n3e03")
 placeholder_text = " Enter your town name and press enter"
 
 [node name="input name line edit" type="LineEdit" parent="."]
+visible = false
 offset_left = 160.0
 offset_top = 436.0
 offset_right = 1117.0
@@ -295,10 +310,31 @@ stream = ExtResource("10_6yb06")
 stream = ExtResource("11_8iugs")
 
 [node name="arrow head" type="TextureRect" parent="."]
-offset_left = 624.0
-offset_top = 329.0
-offset_right = 773.0
-offset_bottom = 478.0
+offset_left = 678.0
+offset_top = 320.0
+offset_right = 827.0
+offset_bottom = 469.0
+texture = ExtResource("14_splh3")
+expand_mode = 1
+flip_v = true
+
+[node name="arrow head2" type="TextureRect" parent="."]
+visible = false
+offset_left = 678.0
+offset_top = 320.0
+offset_right = 827.0
+offset_bottom = 469.0
+texture = ExtResource("14_splh3")
+expand_mode = 1
+flip_v = true
+
+[node name="arrow head3" type="TextureRect" parent="."]
+visible = false
+offset_left = 737.0
+offset_top = 631.0
+offset_right = 886.0
+offset_bottom = 780.0
+rotation = -1.5707964
 texture = ExtResource("14_splh3")
 expand_mode = 1
 flip_v = true
@@ -324,6 +360,13 @@ theme_override_fonts/normal_font = ExtResource("3_olw6s")
 theme_override_font_sizes/normal_font_size = 20
 text = "what will lilth do?"
 horizontal_alignment = 1
+
+[node name="box border" type="Panel" parent="."]
+offset_left = 628.0
+offset_top = 455.0
+offset_right = 872.0
+offset_bottom = 527.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_splh3")
 
 [connection signal="pressed" from="yes button" to="." method="_on_yes_button_pressed"]
 [connection signal="pressed" from="no button" to="." method="_on_no_button_pressed"]
