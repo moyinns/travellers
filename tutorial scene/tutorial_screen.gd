@@ -18,11 +18,19 @@ extends Node2D
 @onready var ruined_town_bg: TextureRect = $"ruined town bg"
 @onready var bg_animation_player: AnimationPlayer = $"bg animation player"
 @onready var discovery_sound: AudioStreamPlayer2D = $"discovery sound"
+@onready var fight_scene_png: TextureRect = $"fight scene png"
+@onready var arrow_head: TextureRect = $"arrow head"
+@onready var text_scroll_2: TextureRect = $"text scroll2"
+@onready var text_scroll_label_2: RichTextLabel = $"text scroll label2"
+@onready var dark_bg_2: ColorRect = $"dark bg2"
+@onready var text_scroll_3: TextureRect = $"text scroll3"
+@onready var main_tutorial_label: Label = $"main tutorial label"
+
 
 
 
 var visible_characters = 0
-var story_line_part = 0
+var story_line_part = 11
 
 func _ready() -> void:
 	horizontal_scroll.visible = false # all of this js makes the stuff im gonna use for the other scenes invisible at the start
@@ -39,6 +47,13 @@ func _ready() -> void:
 	input_name_line_edit.visible = false
 	bedroom_bg.visible = false
 	ruined_town_bg.visible = false
+	fight_scene_png.visible = false
+	arrow_head.visible = false
+	text_scroll_2.visible = false
+	text_scroll_label_2.visible = false
+	dark_bg_2.visible = false
+	text_scroll_3.visible = false 
+	main_tutorial_label.visible = false
 	
 	await get_tree().create_timer(1).timeout # waits 1 sec b4 the flash
 	Transition_screen.colour_rect.visible = false # ensures the transition isnt till playing
@@ -207,12 +222,31 @@ func _on_click_to_continue_pressed() -> void:
 		fade_in(click_to_continue)
 	elif story_line_part == 12:
 		ruined_town_bg.visible = false
+		dark_bg_2.visible = true
 		Sound_effects.play_flash_sound()
 		Transition_screen.flash_transition()
 		await get_tree().create_timer(0.5).timeout
 		long_text_scroll_label.text = "Zorak: now its your job to fix this!"
 		typewriter(long_text_scroll_label, 1.0)
 		fade_in(click_to_continue)
+	elif story_line_part == 13:
+		long_text_scroll_label.text = "Zorak: okay... lets get to the fighting-"
+		typewriter(long_text_scroll_label, 1.5)
+		fade_in(input_name_line_edit)
+		fade_in(click_to_continue)
+	elif story_line_part == 14:
+		dark_bg_2.visible = false
+		fade_out(long_text_scroll_label)
+		fade_out(long_text_scroll)
+		Transition_screen.transition()
+		await Transition_screen.on_transition_finished
+		fade_in(fight_scene_png)
+		fade_in(main_tutorial_label)
+		main_tutorial_label.text = "this is what the fighting scene looks like"
+		typewriter(main_tutorial_label, 1.0)
+		click_to_continue.position = Vector2(33, 262)
+		fade_in(click_to_continue)
+		
 	else:
 		pass
 

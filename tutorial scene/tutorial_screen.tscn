@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://8u5cl02pvwo7"]
+[gd_scene load_steps=20 format=3 uid="uid://8u5cl02pvwo7"]
 
 [ext_resource type="Script" uid="uid://bvm6e3mencayj" path="res://tutorial scene/tutorial_screen.gd" id="1_un01u"]
 [ext_resource type="Texture2D" uid="uid://c7n5nei8ytrwe" path="res://tutorial scene/photos/horizontal scroll.PNG" id="2_k7y0s"]
@@ -12,6 +12,8 @@
 [ext_resource type="AudioStream" uid="uid://bleq7tt3ggikx" path="res://opening scene/pictures, fonts etc/vintage phone ring.wav" id="10_6yb06"]
 [ext_resource type="AudioStream" uid="uid://bu4pbddq5tsjt" path="res://opening scene/pictures, fonts etc/magic-phone-ring.ogg" id="11_8iugs"]
 [ext_resource type="Texture2D" uid="uid://byqo6tfpoaguf" path="res://tutorial scene/photos/ruined town.JPG" id="11_gqgjr"]
+[ext_resource type="Texture2D" uid="uid://b6djr0nbtcs2h" path="res://tutorial scene/photos/base fight scene.png" id="13_w0vay"]
+[ext_resource type="Texture2D" uid="uid://yeri8o301g2x" path="res://tutorial scene/photos/HHSN8767.PNG" id="14_splh3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k7y0s"]
 bg_color = Color(0.9372549, 0.7607843, 0.49019608, 1)
@@ -69,10 +71,23 @@ border_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
 [node name="tutorial screen" type="Node2D"]
 script = ExtResource("1_un01u")
 
+[node name="dark bg2" type="ColorRect" parent="."]
+visible = false
+offset_right = 1149.0
+offset_bottom = 649.0
+color = Color(0.07398971, 0.019322379, 0.0031643668, 1)
+
 [node name="dark bg" type="ColorRect" parent="."]
 offset_right = 1149.0
 offset_bottom = 649.0
 color = Color(0.07398971, 0.019322379, 0.0031643668, 1)
+
+[node name="fight scene png" type="TextureRect" parent="."]
+offset_left = -3.0
+offset_top = 2.0
+offset_right = 1167.9923
+offset_bottom = 661.0
+texture = ExtResource("13_w0vay")
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 visible = false
@@ -90,11 +105,13 @@ texture = ExtResource("2_k7y0s")
 expand_mode = 1
 
 [node name="bedroom bg" type="TextureRect" parent="."]
+visible = false
 offset_right = 1200.0
 offset_bottom = 675.0
 texture = ExtResource("3_fh4ql")
 
 [node name="ruined town bg" type="TextureRect" parent="."]
+visible = false
 offset_left = -2.0
 offset_top = -129.0
 offset_right = 1503.7778
@@ -160,6 +177,28 @@ offset_right = 808.44446
 offset_bottom = 443.0
 texture = ExtResource("5_h3054")
 expand_mode = 1
+
+[node name="text scroll3" type="TextureRect" parent="."]
+offset_left = 14.0
+offset_top = 409.0
+offset_right = 552.6667
+offset_bottom = 712.0
+texture = ExtResource("5_h3054")
+expand_mode = 1
+
+[node name="main tutorial label" type="Label" parent="."]
+offset_left = 95.0
+offset_top = 521.0
+offset_right = 504.0
+offset_bottom = 599.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("3_olw6s")
+theme_override_font_sizes/font_size = 24
+text = "do you want to skip the tutorial?"
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="text scroll label" type="RichTextLabel" parent="."]
 clip_contents = false
@@ -254,6 +293,37 @@ stream = ExtResource("10_6yb06")
 
 [node name="discovery sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("11_8iugs")
+
+[node name="arrow head" type="TextureRect" parent="."]
+offset_left = 624.0
+offset_top = 329.0
+offset_right = 773.0
+offset_bottom = 478.0
+texture = ExtResource("14_splh3")
+expand_mode = 1
+flip_v = true
+
+[node name="text scroll2" type="TextureRect" parent="."]
+offset_left = 131.0
+offset_top = -312.0
+offset_right = 941.6667
+offset_bottom = 144.0
+texture = ExtResource("4_k7y0s")
+expand_mode = 1
+
+[node name="text scroll label2" type="RichTextLabel" parent="."]
+clip_contents = false
+offset_left = 153.0
+offset_top = 67.0
+offset_right = 770.0
+offset_bottom = 117.0
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/line_separation = 9
+theme_override_constants/outline_size = 6
+theme_override_fonts/normal_font = ExtResource("3_olw6s")
+theme_override_font_sizes/normal_font_size = 20
+text = "what will lilth do?"
+horizontal_alignment = 1
 
 [connection signal="pressed" from="yes button" to="." method="_on_yes_button_pressed"]
 [connection signal="pressed" from="no button" to="." method="_on_no_button_pressed"]
