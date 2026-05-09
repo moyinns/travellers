@@ -1,0 +1,193 @@
+[gd_scene load_steps=17 format=3 uid="uid://br5fyn53skdym"]
+
+[ext_resource type="Script" uid="uid://b0t3ftlg0gkf0" path="res://winning scene/winning_screen.gd" id="1_f7t4l"]
+[ext_resource type="Texture2D" uid="uid://bbpwqawqw0tuu" path="res://winning scene/happy town.jpg" id="2_kf8ru"]
+[ext_resource type="Texture2D" uid="uid://tshhxkcrc0mq" path="res://tutorial scene/photos/long text scroll.PNG" id="3_uwi8n"]
+[ext_resource type="Texture2D" uid="uid://di4p7dv5mq0ao" path="res://tutorial scene/photos/scarecrow.JPG" id="4_qaldq"]
+[ext_resource type="FontFile" uid="uid://cyammoir0onob" path="res://opening scene/pictures, fonts etc/A Goblin Appears!.otf" id="5_mdbri"]
+[ext_resource type="AudioStream" uid="uid://cfmbiwsph47sj" path="res://opening scene/pictures, fonts etc/typing sfx.ogg" id="6_ik6ol"]
+[ext_resource type="AudioStream" uid="uid://bu4pbddq5tsjt" path="res://opening scene/pictures, fonts etc/magic-phone-ring.ogg" id="7_cn20l"]
+[ext_resource type="AudioStream" uid="uid://cs7mm6hmketuu" path="res://winning scene/videoplayback.wav" id="8_qax5m"]
+[ext_resource type="AudioStream" uid="uid://bcqly0r6acgel" path="res://winning scene/videoplayback (1).wav" id="9_41cj3"]
+[ext_resource type="Texture2D" uid="uid://oppksq00o7wt" path="res://winning scene/BIRZ5878.PNG" id="10_7bdjn"]
+[ext_resource type="Texture2D" uid="uid://bd5pibdi35w3e" path="res://winning scene/UTXJ5806.PNG" id="11_ugryj"]
+
+[sub_resource type="Animation" id="Animation_hhv65"]
+resource_name = "pan left to right"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("town:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-6, -36), Vector2(-149, -36)]
+}
+
+[sub_resource type="Animation" id="Animation_dc7hl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("town:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-6, -36)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rtyof"]
+_data = {
+&"RESET": SubResource("Animation_dc7hl"),
+&"pan left to right": SubResource("Animation_hhv65")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vvmc3"]
+bg_color = Color(0.9372549, 0.7607843, 0.49019608, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.54509807, 0.3137255, 0.13333334, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kfnm6"]
+bg_color = Color(0.9372549, 0.7607843, 0.49019608, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.54509807, 0.3137255, 0.13333334, 1)
+
+[node name="winning_screen" type="Node2D"]
+script = ExtResource("1_f7t4l")
+
+[node name="town" type="TextureRect" parent="."]
+offset_left = -6.0
+offset_top = -36.0
+offset_right = 1295.5073
+offset_bottom = 691.0
+texture = ExtResource("2_kf8ru")
+
+[node name="dark bg" type="ColorRect" parent="."]
+offset_right = 1149.0
+offset_bottom = 649.0
+color = Color(0.07450981, 0.019607844, 0.003921569, 1)
+
+[node name="long text scroll" type="TextureRect" parent="."]
+offset_left = 1.0
+offset_top = 43.0
+offset_right = 1094.5117
+offset_bottom = 653.0
+texture = ExtResource("3_uwi8n")
+expand_mode = 1
+
+[node name="scarecrow pfp" type="TextureRect" parent="."]
+offset_left = 39.0
+offset_top = 388.0
+offset_right = 144.0
+offset_bottom = 493.0
+texture = ExtResource("4_qaldq")
+expand_mode = 1
+
+[node name="long text scroll label" type="RichTextLabel" parent="."]
+clip_contents = false
+offset_left = 73.0
+offset_top = 532.0
+offset_right = 902.0
+offset_bottom = 607.0
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/line_separation = 9
+theme_override_constants/outline_size = 6
+theme_override_fonts/normal_font = ExtResource("5_mdbri")
+theme_override_font_sizes/normal_font_size = 16
+text = "Zorak: you failed."
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="typing sound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(373, 197)
+stream = ExtResource("6_ik6ol")
+parameters/looping = true
+
+[node name="discovery sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_cn20l")
+
+[node name="cheer sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_qax5m")
+volume_db = 4.771
+
+[node name="gift sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_41cj3")
+volume_db = 4.771
+
+[node name="gift" type="TextureRect" parent="."]
+offset_left = 377.0
+offset_top = 43.0
+offset_right = 751.0
+offset_bottom = 417.0
+texture = ExtResource("10_7bdjn")
+expand_mode = 1
+
+[node name="travel gift" type="TextureRect" parent="."]
+offset_left = 345.0
+offset_top = 32.0
+offset_right = 773.0
+offset_bottom = 460.0
+texture = ExtResource("11_ugryj")
+expand_mode = 1
+
+[node name="town animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_rtyof")
+}
+
+[node name="click_to_continue" type="Button" parent="."]
+offset_left = 945.0
+offset_top = 509.0
+offset_right = 1137.0
+offset_bottom = 625.0
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/h_separation = 0
+theme_override_constants/icon_max_width = 0
+theme_override_constants/line_spacing = 10
+theme_override_fonts/font = ExtResource("5_mdbri")
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_vvmc3")
+text = "click to continue"
+autowrap_mode = 3
+
+[node name="play again button" type="Button" parent="."]
+offset_left = 287.0
+offset_top = 329.0
+offset_right = 590.9286
+offset_bottom = 403.0
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("5_mdbri")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kfnm6")
+text = "play again"
+
+[node name="quit button" type="Button" parent="."]
+offset_left = 608.0
+offset_top = 329.0
+offset_right = 911.9286
+offset_bottom = 403.0
+theme_override_colors/font_outline_color = Color(0.5372549, 0.3137255, 0.14117648, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("5_mdbri")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kfnm6")
+text = "quit"
+
+[connection signal="pressed" from="click_to_continue" to="." method="_on_click_to_continue_pressed"]
+[connection signal="pressed" from="play again button" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="quit button" to="." method="_on_quit_button_pressed"]

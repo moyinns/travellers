@@ -16,6 +16,8 @@ func _ready() -> void:
 	if Globals.player_position != Vector2.ZERO:
 		$player.position = Globals.player_position
 	mob_count_label.text = "mobs left: "+str(mob_count-Globals.defeated_count)
+	if Globals.defeated_count == 9:
+		get_tree().change_scene_to_file("res://winning scene/winning_screen.tscn")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

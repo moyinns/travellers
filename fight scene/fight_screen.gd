@@ -55,6 +55,7 @@ extends Node2D
 @onready var rest_sound: AudioStreamPlayer2D = $"rest sound"
 @onready var win_sound: AudioStreamPlayer2D = $"win sound"
 @onready var loose_sound: AudioStreamPlayer2D = $"loose sound"
+@onready var background_music: AudioStreamPlayer = $"background music"
 
 var moves_made = 0
 var enemy_health = 40
@@ -606,7 +607,7 @@ func _on_lgh_kick_button_pressed() -> void:
 	attack_sound.play()
 	await get_tree().create_timer(1).timeout
 	attack_sound.stop()
-	text_scroll_label.text = Globals.player_name+" dealt a light kick!"
+	text_scroll_label.text = Globals.player_name+" dealt a lightening kick!"
 	player_icon.visible = true
 	typewriter(text_scroll_label)
 	await get_tree().create_timer(1).timeout
@@ -842,7 +843,7 @@ func player_victory():
 	if Globals.current_enemy == "beast":
 		fade_out(beast, 2.0)
 		fade_out(beast_icon, 2.0)
-	
+	background_music.stop()
 	win_sound.play()
 	player_icon.visible = true
 	Transition_screen.flash_transition()
@@ -856,10 +857,12 @@ func player_victory():
 	await get_tree().create_timer(2).timeout
 	Transition_screen.transition()
 	await Transition_screen.on_transition_finished
+	await get_tree().create_timer(2).timeout
 	get_tree().change_scene_to_file("res://main game scene/main_game.tscn")
 
 
 func enemy_victory():
+	background_music.stop()
 	loose_sound.play()
 	if Globals.current_enemy == "ninja":
 		fade_out(player, 2.0)
@@ -897,3 +900,5 @@ func enemy_victory():
 		knight.play("idle front")
 		text_scroll_label.text = Globals.player_name+" lost!"
 		typewriter(text_scroll_label)
+	await get_tree().create_timer(3).timeout
+	get_tree().change_scene_to_file("res://loosing scene/loosing_screen.tscn")
